@@ -5,6 +5,9 @@
 *.b#?
 *.l#?
 
+# Lock Files
+*.lck
+
 # Eagle project file
 # It contains a serial number and references to the file structure
 # on your computer.
@@ -12,6 +15,7 @@
 eagle.epf
 
 # CAM files
+*.zip
 *.$$$
 *.cmp
 *.ly2
@@ -26,7 +30,10 @@ eagle.epf
 *.dri
 *.drl
 *.gpi
+*.ger
 *.pls
+*.xln
+*.pro
 
 *.drd
 *.drd.*
