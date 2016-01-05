@@ -12659,7 +12659,7 @@ Standard SMD solder jumper. Used to automate production. Two varients : Normally
 <part name="R5" library="adafruit" deviceset="R-US_" device="M0805" value="22K"/>
 <part name="C12" library="adafruit" deviceset="C-US" device="C0805" value="0.1uF"/>
 <part name="GND17" library="SparkFun" deviceset="GND" device=""/>
-<part name="C13" library="adafruit" deviceset="C-US" device="C0805" value="0.1uF"/>
+<part name="C13" library="adafruit" deviceset="C-US" device="C0805" value="33pF"/>
 <part name="GND18" library="SparkFun" deviceset="GND" device=""/>
 <part name="R7" library="adafruit" deviceset="R-US_" device="M0805" value="200K"/>
 <part name="LEDS" library="SparkFun-Connectors" deviceset="M04" device="JST-PTH"/>
