@@ -13228,8 +13228,8 @@ Standard SMD solder jumper. Used to automate production. Two varients : Normally
 </segment>
 <segment>
 <pinref part="C2" gate="G$1" pin="2"/>
-<label x="142.24" y="162.56" size="1.27" layer="95" rot="R180" xref="yes"/>
-<junction x="142.24" y="162.56"/>
+<wire x1="142.24" y1="162.56" x2="139.7" y2="162.56" width="0.1524" layer="91"/>
+<label x="139.7" y="162.56" size="1.27" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
 <net name="RXI" class="0">
