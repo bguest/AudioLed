@@ -10,8 +10,11 @@
 #include "Sign.h"
 #include "effects/Effect.h"
 #include "effects/RandomOn.h"
-#include "effects/SingleFade.h"
 #include "effects/TwoColor.h"
+#include "effects/SingleFade.h"
+#include "effects/Diffusion.h"
+
+const uint8_t UPDATE_DURRATION = 5;
 
 typedef const enum _Layer {
   TextLayer = 0,
@@ -25,10 +28,10 @@ typedef const enum _EFFECTS{
 
   SINGLE_FADE,
   TWO_COLOR,
+  DIFFUSION,
   COLOR_EFFECT_COUNT
 } EFFECTS;
 
-const uint8_t UPDATE_DURRATION = 5;
 
 class Effects{
   public:
@@ -51,6 +54,7 @@ class Effects{
     RandomOn randomOn;
     SingleFade singleFade;
     TwoColor twoColor;
+    Diffusion diffusion;
 
     Adafruit_WS2801 strip;
 

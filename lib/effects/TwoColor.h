@@ -1,7 +1,6 @@
 #ifndef TWO_COLOR_H
 #define TWO_COLOR_H
 
-#include "Effect.h"
 
 class TwoColor : public Effect{
 
@@ -13,5 +12,5 @@ class TwoColor : public Effect{
   private:
     uint8_t hue[2];
 
-}
+};
 #endif

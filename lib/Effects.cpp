@@ -3,12 +3,13 @@
 #include "effects/RandomOn.cpp"
 #include "effects/SingleFade.cpp"
 #include "effects/TwoColor.cpp"
+#include "effects/Diffusion.cpp"
 
 Effects::Effects(){
   effect[0] = &randomOn;
-  effect[1] = &twoColor;
+  effect[1] = &diffusion;
   cEffect[0] = RANDOM_ON;
-  cEffect[1] = TWO_COLOR;
+  cEffect[1] = DIFFUSION;
   lastRun = 0;
 }
 
@@ -23,7 +24,7 @@ void Effects::run(){
   unsigned long currMillis = millis();
   if(currMillis - lastRun > UPDATE_DURRATION){
     lastRun = currMillis;
-    data.tempo = 1000;
+    data.tempo = 3000;
     this->updateShouldStep();
     effect[0] -> run(sign, data);
     effect[1] -> run(sign, data);
@@ -48,6 +49,7 @@ void Effects::setEffect(uint8_t kEffect, Layer layer){
     case RANDOM_ON: effect[layer] = &randomOn; break;
     case SINGLE_FADE: effect[layer] = &singleFade; break;
     case TWO_COLOR: effect[layer] = &twoColor; break;
+    case DIFFUSION: effect[layer] = &diffusion; break;
   }
   effect[layer] -> randomize();
 }
@@ -59,9 +61,10 @@ void Effects::changeEffect(){
 }
 
 void Effects::updateStrip(){
-  for(uint8_t idx = 0; idx< LED_COUNT; idx++){
+  uint8_t offset = 0;
+  for(uint8_t idx = offset; idx< LED_COUNT; idx++){
     Pixel* pixel = sign.pixelAtIndex(idx);
-    strip.setPixelColor(idx, pixel->color());
+    strip.setPixelColor(idx-offset, pixel->color());
   }
 
 }
