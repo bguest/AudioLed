@@ -37,14 +37,14 @@ class Effects{
   public:
     Effects();
     void init();
-    void run();
+    void run(EffectData &data);
     void setEffect(uint8_t kEffect, Layer layer);
     void changeEffect();
 
   private:
     unsigned long lastRun;
     unsigned long lastStep;
-    void updateShouldStep();
+    void updateShouldStep(EffectData &data);
 
     Sign sign;
 
@@ -59,8 +59,6 @@ class Effects{
     Adafruit_WS2801 strip;
 
     void updateStrip();
-
-    EffectData data;
 };
 #endif
 

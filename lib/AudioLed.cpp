@@ -5,9 +5,11 @@ AudioLed::AudioLed(){
 }
 
 void AudioLed::init(){
+  sound.init();
   effects.init();
 }
 
 void AudioLed::run(){
-  effects.run();
+  sound.run(data);
+  effects.run(data);
 }

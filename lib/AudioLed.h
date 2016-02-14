@@ -2,6 +2,7 @@
 #define AUDIO_LED_H
 
 #include "Effects.h"
+#include "Sound.h"
 
 class AudioLed{
   public:
@@ -11,6 +12,8 @@ class AudioLed{
 
   private:
     Effects effects;
+    Sound sound;
+    EffectData data;
 };
 
 #endif

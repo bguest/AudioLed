@@ -20,12 +20,12 @@ void Effects::init(){
   strip.show();
 }
 
-void Effects::run(){
+void Effects::run(EffectData &data){
   unsigned long currMillis = millis();
   if(currMillis - lastRun > UPDATE_DURRATION){
     lastRun = currMillis;
     data.tempo = 3000;
-    this->updateShouldStep();
+    this->updateShouldStep(data);
     effect[0] -> run(sign, data);
     effect[1] -> run(sign, data);
     this -> updateStrip();
@@ -33,7 +33,7 @@ void Effects::run(){
   }
 }
 
-void Effects::updateShouldStep(){
+void Effects::updateShouldStep(EffectData &data){
   unsigned long currMillis = millis();
   if(currMillis - lastStep > data.tempo){
     data.shouldStep = true;
