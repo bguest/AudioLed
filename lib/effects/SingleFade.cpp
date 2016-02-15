@@ -21,7 +21,7 @@ void SingleFade::run(Sign &sign, EffectData &data){
   sign.off();
 
   for(uint8_t i=0; i<2; i++){
-    Pixel* pixel = sign.pixelAtIndex(activePixel[i]);
+    Pixel* pixel = sign.pixel(activePixel[i]);
     pixel->hue += data.volume << 2;
     
     if(data.shouldStep){

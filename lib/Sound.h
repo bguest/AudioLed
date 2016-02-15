@@ -8,5 +8,8 @@ class Sound {
     void init();
     void run(EffectData &data);
 
+  private:
+    uint16_t maxFreqAmp[7];
+
 };
 #endif

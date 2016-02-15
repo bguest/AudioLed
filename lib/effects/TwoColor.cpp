@@ -13,7 +13,7 @@ void TwoColor::run(Sign &sign, EffectData &data){
   if(!data.shouldStep){ return; }
 
   for(uint8_t i=0; i<LED_COUNT; i++){
-    Pixel* pixel = sign.pixelAtIndex(i);
+    Pixel* pixel = sign.pixel(i);
     uint16_t h = pixel->isOn ? hue[0] : hue[1];
     pixel->hue = h << 8;
     pixel->brightness = 0xFFFF;

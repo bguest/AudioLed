@@ -3,13 +3,14 @@
 
 #define UINT8_MAX 0xFF
 #define UINT16_MAX 0xFFFF
+#define FREQ_COUNT 7
 
 struct EffectData{
   uint16_t tempo; // Period between taps
   bool shouldStep;
-  uint8_t volume;
-  uint16_t rawVolume;
-  uint8_t maxVolume;
-  uint8_t freqAmp[7];
+  uint16_t volume;
+  uint16_t maxVolume;
+  uint16_t freqAmp[FREQ_COUNT];
+  uint16_t maxFreqAmp[FREQ_COUNT];
 };
 #endif

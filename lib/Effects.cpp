@@ -4,12 +4,13 @@
 #include "effects/SingleFade.cpp"
 #include "effects/TwoColor.cpp"
 #include "effects/Diffusion.cpp"
+#include "effects/Spectrum0.cpp"
 
 Effects::Effects(){
-  effect[0] = &randomOn;
-  effect[1] = &diffusion;
-  cEffect[0] = RANDOM_ON;
-  cEffect[1] = DIFFUSION;
+  effect[0] = &spectrum0;
+  cEffect[1] = SPECTRUM_0;
+  effect[1] = &twoColor;
+  cEffect[0] = TWO_COLOR;
   lastRun = 0;
 }
 
@@ -50,6 +51,7 @@ void Effects::setEffect(uint8_t kEffect, Layer layer){
     case SINGLE_FADE: effect[layer] = &singleFade; break;
     case TWO_COLOR: effect[layer] = &twoColor; break;
     case DIFFUSION: effect[layer] = &diffusion; break;
+    case SPECTRUM_0: effect[layer] = &spectrum0; break;
   }
   effect[layer] -> randomize();
 }
@@ -63,7 +65,7 @@ void Effects::changeEffect(){
 void Effects::updateStrip(){
   uint8_t offset = 0;
   for(uint8_t idx = offset; idx< LED_COUNT; idx++){
-    Pixel* pixel = sign.pixelAtIndex(idx);
+    Pixel* pixel = sign.pixel(idx);
     strip.setPixelColor(idx-offset, pixel->color());
   }
 

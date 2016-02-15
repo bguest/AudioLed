@@ -3,7 +3,7 @@
 void Sign::init(){
   for(uint8_t i = 0; i< LED_WIDTH; i++){
     for(uint8_t j = 0; j<LED_HEIGHT; j++){
-      Pixel* pixel = &pixels[i][j];
+      Pixel* pixel = &pixels[LED_HEIGHT*i+j];
       pixel->x = i;
       pixel->y = j;
     }
@@ -12,24 +12,30 @@ void Sign::init(){
 }
 
 void Sign::off(){
-  for(uint8_t i = 0; i<LED_WIDTH; i++){
-    for(uint8_t j = 0; j<LED_HEIGHT; j++){
-      Pixel *pixel = &pixels[i][j];
-      pixel->brightness = 0;
-      pixel->isOn = false;
-    }
+  for(uint8_t i = 0; i<LED_COUNT; i++){
+    Pixel *pixel = &pixels[i];
+    pixel->isOn = false;
   }
 }
 
-Pixel* Sign::pixelAtIndex(uint8_t index){
+void Sign::black(){
+  for(uint8_t i = 0; i<LED_COUNT; i++){
+    Pixel *pixel = &pixels[i];
+    pixel->brightness = 0;
+  }
+}
+
+Pixel* Sign::pixel(uint8_t index){
   uint8_t x = ledXY[index][0];
   uint8_t y = ledXY[index][1];
-  return &pixels[x][y];
+  return &pixels[LED_HEIGHT*x+y];
+}
+
+Pixel* Sign::pixel(uint8_t x, uint8_t y){
+  return &pixels[LED_HEIGHT*x+y];
 }
 
 Pixel* Sign::randomPixel(){
-  uint8_t randX = random(LED_WIDTH);
-  uint8_t randY = random(LED_HEIGHT);
-
-  return &pixels[randX][randY];
+  uint8_t rand = random(LED_WIDTH*LED_HEIGHT);
+  return &pixels[rand];
 }

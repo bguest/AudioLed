@@ -17,7 +17,7 @@ void Diffusion::run(Sign &sign, EffectData &data){
 
   for(uint8_t i = 0; i<LED_WIDTH; i++){
     for(uint8_t j = 0; j<LED_HEIGHT; j++){
-      Pixel* pixel = &sign.pixels[i][j];
+      Pixel* pixel = sign.pixel(i,j);
       if(pixel->isOn){
         pixel->hue = 0xFFFF;
       }else{
@@ -31,12 +31,12 @@ void Diffusion::run(Sign &sign, EffectData &data){
 void Diffusion::diffuse(Sign &sign, uint8_t x, uint8_t y, int32_t deltaT){
 
   int32_t u[4];
-  u[0] = (x == 0 )          ? 0 : sign.pixels[x-1][y].hue;
-  u[1] = (x == LED_WIDTH)   ? 0 : sign.pixels[x+1][y].hue;
-  u[2] = (y == 0 )          ? 0 : sign.pixels[x][y-1].hue;
-  u[3] = (y == LED_HEIGHT ) ? 0 : sign.pixels[x][y+1].hue;
+  u[0] = (x == 0 )          ? 0 : sign.pixel(x-1, y)->hue;
+  u[1] = (x == LED_WIDTH)   ? 0 : sign.pixel(x+1, y)->hue;
+  u[2] = (y == 0 )          ? 0 : sign.pixel(x, y-1)->hue;
+  u[3] = (y == LED_HEIGHT ) ? 0 : sign.pixel(x, y+1)->hue;
 
-  Pixel* pixel = &sign.pixels[x][y];
+  Pixel* pixel = sign.pixel(x,y);
   int32_t v = diffusionConstant;
 
   int32_t h0 = pixel->hue;

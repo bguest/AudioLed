@@ -18,8 +18,7 @@ void RandomOn::run(Sign &sign, EffectData &data){
     sign.off();
   }
   for(uint8_t i = 0; i < onCount; i++){
-    uint8_t rand = random(0,LED_COUNT);
-    Pixel* pixel = sign.pixelAtIndex(rand);
+    Pixel* pixel = sign.randomPixel();
     pixel->isOn = turnOn;
   }
 }
