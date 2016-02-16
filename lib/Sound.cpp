@@ -39,15 +39,7 @@ void Sound::run(EffectData &data){
     }
     digitalWrite(STROBE, HIGH);
     digitalWrite(STROBE, LOW);
-#ifdef DEBUG
-    Serial.print(" ");
-    Serial.print(data.freqAmp[i]);
-#endif
   }
-
-#ifdef DEBUG
-  Serial.print("\n\r");
-#endif
 }
 
 

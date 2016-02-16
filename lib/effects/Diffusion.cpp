@@ -6,7 +6,7 @@ Diffusion::Diffusion(){
 
 void Diffusion::randomize(){
   lastStep = 0;
-  diffusionConstant = 1500;
+  diffusionConstant = 1000;
 }
 
 void Diffusion::run(Sign &sign, EffectData &data){
@@ -23,7 +23,7 @@ void Diffusion::run(Sign &sign, EffectData &data){
       }else{
         this->diffuse(sign, i, j, deltaT);
       }
-      pixel->brightness = 0xFFFF >> 2;
+      pixel->brightness = 0xFFFF;
     }
   }
 }
@@ -47,7 +47,7 @@ void Diffusion::diffuse(Sign &sign, uint8_t x, uint8_t y, int32_t deltaT){
   }
   h = h*deltaT/v + h0*(1-deltaT/v);
 
-  if(h < 0){ h = 0x0; }
+  if(h < 0){ h = 0; }
   else if(h > 0xFFFF){ h = 0xFFFF; }
   pixel->hue = h;
 }

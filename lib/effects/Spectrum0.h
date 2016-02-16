@@ -12,8 +12,9 @@ class Spectrum0 : public Effect {
     void run(Sign &sign, EffectData &data);
 
   private:
-    uint16_t maxAmp[7];
-    unsigned long lastMax[7];
+    uint16_t maxAmp[FREQ_COUNT];
+    bool isHighOn;
+    unsigned long lastMax[FREQ_COUNT];
 
 };
 

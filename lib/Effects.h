@@ -13,6 +13,7 @@
 #include "effects/SingleFade.h"
 #include "effects/Diffusion.h"
 #include "effects/Spectrum0.h"
+#include "effects/Wander.h"
 
 const uint8_t UPDATE_DURRATION = 5;
 
@@ -25,6 +26,7 @@ typedef const enum _Layer {
 typedef const enum _EFFECTS{
   RANDOM_ON = 0,
   SPECTRUM_0,
+  WANDER,
   TEXT_EFFECT_COUNT,
 
   SINGLE_FADE,
@@ -57,6 +59,7 @@ class Effects{
     TwoColor twoColor;
     Diffusion diffusion;
     Spectrum0 spectrum0;
+    Wander wander;
 
     Adafruit_WS2801 strip;
 

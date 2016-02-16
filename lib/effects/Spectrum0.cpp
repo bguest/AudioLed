@@ -1,11 +1,17 @@
 #include "Spectrum0.h"
 
 Spectrum0::Spectrum0(){
-
+  for(uint8_t i=0; i<FREQ_COUNT; i++){
+    maxAmp[i] = 0;
+    lastMax[i] = 0;
+  }
+  isHighOn = false;
 }
 
 void Spectrum0::run(Sign &sign, EffectData &data){
   unsigned long currMillis = millis();
+
+  data.shouldStep = true;
 
   sign.off();
   uint8_t min = min(FREQ_COUNT, LED_WIDTH);
@@ -25,20 +31,18 @@ void Spectrum0::run(Sign &sign, EffectData &data){
 
     uint8_t dotSize = data.maxFreqAmp[i]/LED_HEIGHT;
 
-    for(uint8_t j = 1; j <= LED_HEIGHT; j++){
+    for(uint8_t j = 0; j < LED_HEIGHT; j++){
       Pixel* pixel = sign.pixel(i,j);
 
-      if(j*dotSize < data.freqAmp[i]){
+      if((j+1)*dotSize < data.freqAmp[i]){
         pixel -> isOn = true;
       }
-      else if(maxAmp[i] < j*dotSize && maxAmp[i] > (j-1)*dotSize ){
+      else if(isHighOn && maxAmp[i] < (j+1)*dotSize && maxAmp[i] > j*dotSize ){
         pixel -> isOn = true;
+      }else{
       }
-
     } 
-
   }
-
 
 }
 

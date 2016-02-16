@@ -1,10 +1,9 @@
 #include <Bounce2.h>
-#include <AudioLed.h>
 #include <Adafruit_WS2801.h>
 #include <IRremote.h>
-
 #define DEBUG
 
+#include <AudioLed.h>
 AudioLed audioLed;
 
 void setup(){

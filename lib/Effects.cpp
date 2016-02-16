@@ -5,12 +5,13 @@
 #include "effects/TwoColor.cpp"
 #include "effects/Diffusion.cpp"
 #include "effects/Spectrum0.cpp"
+#include "effects/Wander.cpp"
 
 Effects::Effects(){
   effect[0] = &spectrum0;
   cEffect[1] = SPECTRUM_0;
-  effect[1] = &twoColor;
-  cEffect[0] = TWO_COLOR;
+  effect[1] = &diffusion;
+  cEffect[0] = DIFFUSION;
   lastRun = 0;
 }
 
@@ -52,6 +53,7 @@ void Effects::setEffect(uint8_t kEffect, Layer layer){
     case TWO_COLOR: effect[layer] = &twoColor; break;
     case DIFFUSION: effect[layer] = &diffusion; break;
     case SPECTRUM_0: effect[layer] = &spectrum0; break;
+    case WANDER: effect[layer] = &wander; break;
   }
   effect[layer] -> randomize();
 }
