@@ -23,7 +23,7 @@ void SingleFade::run(Sign &sign, EffectData &data){
   for(uint8_t i=0; i<2; i++){
     Pixel* pixel = sign.pixel(activePixel[i]);
     pixel->hue += data.volume << 2;
-    
+
     if(data.shouldStep){
       pixel->hue += random(maxHueStep);
     }

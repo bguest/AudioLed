@@ -5,6 +5,8 @@
 #define UINT16_MAX 0xFFFF
 #define FREQ_COUNT 7
 
+#include "Arduino.h"
+
 struct EffectData{
   uint16_t tempo; // Period between taps
   bool shouldStep;

@@ -37,9 +37,8 @@ void Spectrum0::run(Sign &sign, EffectData &data){
       if((j+1)*dotSize < data.freqAmp[i]){
         pixel -> isOn = true;
       }
-      else if(isHighOn && maxAmp[i] < (j+1)*dotSize && maxAmp[i] > j*dotSize ){
+      if(isHighOn && maxAmp[i] < (j+1)*dotSize && maxAmp[i] > j*dotSize ){
         pixel -> isOn = true;
-      }else{
       }
     } 
   }

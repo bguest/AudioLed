@@ -2,8 +2,9 @@
 #define DIFFUSION_H
 
 #include "Arduino.h"
+#include "Effect.h"
 
-class Diffusion : public Effect{
+class Diffusion: public Effect{
   public:
     Diffusion();
     void run(Sign &sign, EffectData &data);

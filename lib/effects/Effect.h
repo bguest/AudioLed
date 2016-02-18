@@ -1,6 +1,7 @@
 #ifndef EFFECT_H
 #define EFFECT_H
 
+#include "Sign.h"
 #include "EffectData.h"
 
 class Effect{

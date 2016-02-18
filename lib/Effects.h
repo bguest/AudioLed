@@ -4,16 +4,15 @@
 #define DATA_PIN 11
 #define CLK_PIN 13
 
-#include "Arduino.h"
-#include "Adafruit_WS2801.h"
-#include "Sign.h"
 #include "effects/Effect.h"
+#include "effects/Diffusion.h"
 #include "effects/RandomOn.h"
 #include "effects/TwoColor.h"
 #include "effects/SingleFade.h"
-#include "effects/Diffusion.h"
 #include "effects/Spectrum0.h"
 #include "effects/Wander.h"
+
+#include "Adafruit_WS2801.h"
 
 const uint8_t UPDATE_DURRATION = 5;
 
@@ -23,16 +22,14 @@ typedef const enum _Layer {
   LayerCount
 } Layer;
 
-typedef const enum _EFFECTS{
+typedef const enum _EFFECTS {
   RANDOM_ON = 0,
   SPECTRUM_0,
   WANDER,
-  TEXT_EFFECT_COUNT,
-
   SINGLE_FADE,
   TWO_COLOR,
   DIFFUSION,
-  COLOR_EFFECT_COUNT
+  EFFECT_COUNT
 } EFFECTS;
 
 
@@ -42,7 +39,8 @@ class Effects{
     void init();
     void run(EffectData &data);
     void setEffect(uint8_t kEffect, Layer layer);
-    void changeEffect();
+    void nextEffect(Layer layer);
+    void prevEffect(Layer layer);
 
   private:
     unsigned long lastRun;

@@ -2,6 +2,7 @@
 #define SPECTRUM_0_H
 
 #include "Arduino.h"
+#include "Effect.h"
 
 const int RESET_TIME = 5000;
 

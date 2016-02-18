@@ -1,6 +1,7 @@
 #ifndef RANDOM_ON_H
 #define RANDOM_ON_H
 
+#include "Arduino.h"
 #include "Effect.h"
 
 class RandomOn : public Effect{

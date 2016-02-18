@@ -2,6 +2,7 @@
 #define WANDER_H
 
 #include "Arduino.h"
+#include "Effect.h"
 
 class Wander : public Effect{
 

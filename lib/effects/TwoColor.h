@@ -1,6 +1,8 @@
 #ifndef TWO_COLOR_H
 #define TWO_COLOR_H
 
+#include "Arduino.h"
+#include "Effect.h"
 
 class TwoColor : public Effect{
 

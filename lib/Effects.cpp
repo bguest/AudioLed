@@ -1,17 +1,17 @@
 #include "Effects.h"
 #include "effects/Effect.cpp"
+#include "effects/Diffusion.cpp"
 #include "effects/RandomOn.cpp"
 #include "effects/SingleFade.cpp"
 #include "effects/TwoColor.cpp"
-#include "effects/Diffusion.cpp"
 #include "effects/Spectrum0.cpp"
 #include "effects/Wander.cpp"
 
 Effects::Effects(){
   effect[0] = &spectrum0;
-  cEffect[1] = SPECTRUM_0;
+  cEffect[0] = SPECTRUM_0;
   effect[1] = &diffusion;
-  cEffect[0] = DIFFUSION;
+  cEffect[1] = DIFFUSION;
   lastRun = 0;
 }
 
@@ -26,7 +26,7 @@ void Effects::run(EffectData &data){
   unsigned long currMillis = millis();
   if(currMillis - lastRun > UPDATE_DURRATION){
     lastRun = currMillis;
-    data.tempo = 3000;
+    data.tempo = 2000;
     this->updateShouldStep(data);
     effect[0] -> run(sign, data);
     effect[1] -> run(sign, data);
@@ -58,10 +58,20 @@ void Effects::setEffect(uint8_t kEffect, Layer layer){
   effect[layer] -> randomize();
 }
 
-void Effects::changeEffect(){
-  //cEffect++;
-  //cEffect = cEffect % EFFECT_COUNT;
-  //this -> setEffect(cEffect);
+void Effects::nextEffect(Layer layer){
+  cEffect[layer]++;
+  cEffect[layer] = cEffect[layer] % EFFECT_COUNT;
+  this -> setEffect(cEffect[layer], layer);
+}
+
+void Effects::prevEffect(Layer layer){
+  if(cEffect[layer] == 0){
+    cEffect[layer] = EFFECT_COUNT - 1;
+  }else{
+    cEffect[layer]--;
+    cEffect[layer] = cEffect[layer] % EFFECT_COUNT;
+  }
+  this -> setEffect(cEffect[layer], layer);
 }
 
 void Effects::updateStrip(){

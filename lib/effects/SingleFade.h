@@ -1,6 +1,7 @@
 #ifndef SINGLE_FADE_H
 #define SINGLE_FADE_H
 
+#include "Arduino.h"
 #include "Effect.h"
 
 class SingleFade : public Effect{
