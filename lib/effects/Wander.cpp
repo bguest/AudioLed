@@ -3,7 +3,7 @@
 Wander::Wander(){
   x = floor(LED_WIDTH/2);
   y = floor(LED_HEIGHT/2);
-  keepOn = false;
+  keepOn = true;
 }
 
 void Wander::run(Sign &sign, EffectData &data){

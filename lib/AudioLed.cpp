@@ -33,6 +33,7 @@ void AudioLed::handleIrCode(uint32_t irCode){
     case PLAY_PAUSE_IR:
       break;
     case MENUE_IR:
+      effects.randomize();
       break;
     case UP_IR:
       effects.nextEffect(ColorLayer);
@@ -48,6 +49,7 @@ void AudioLed::handleIrCode(uint32_t irCode){
       break;
     case CENTER_IR:
       tempo.tap();
+      Serial.println(tempo.tempo);
       break;
   }
 

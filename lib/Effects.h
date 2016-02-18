@@ -11,6 +11,8 @@
 #include "effects/SingleFade.h"
 #include "effects/Spectrum0.h"
 #include "effects/Wander.h"
+#include "effects/Wave0.h"
+#include "effects/SpectrumLine.h"
 
 #include "Adafruit_WS2801.h"
 
@@ -24,11 +26,14 @@ typedef const enum _Layer {
 
 typedef const enum _EFFECTS {
   RANDOM_ON = 0,
-  SPECTRUM_0,
   WANDER,
+  SPECTRUM_0,
+  SPECTRUM_LINE,
+
   SINGLE_FADE,
   TWO_COLOR,
   DIFFUSION,
+  WAVE0,
   EFFECT_COUNT
 } EFFECTS;
 
@@ -38,6 +43,7 @@ class Effects{
     Effects();
     void init();
     void run(EffectData &data);
+    void randomize();
     void setEffect(uint8_t kEffect, Layer layer);
     void nextEffect(Layer layer);
     void prevEffect(Layer layer);
@@ -57,7 +63,9 @@ class Effects{
     TwoColor twoColor;
     Diffusion diffusion;
     Spectrum0 spectrum0;
+    SpectrumLine spectrumLine;
     Wander wander;
+    Wave0 wave0;
 
     Adafruit_WS2801 strip;
 

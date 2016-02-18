@@ -40,7 +40,7 @@ void SingleFade::run(Sign &sign, EffectData &data){
 
 void SingleFade::updateActive(){
   activePixel[1] = activePixel[0];
-  uint8_t sample[3];
+  uint8_t sample[LED_COUNT-1];
   uint8_t i = 0;
   for(uint8_t j=0; j<4; j++){
     if(j != activePixel[1]){
@@ -48,5 +48,5 @@ void SingleFade::updateActive(){
       i++;
     }
   }
-  activePixel[0] = sample[random(3)];
+  activePixel[0] = sample[random(LED_COUNT-1)];
 }

@@ -6,12 +6,14 @@
 #include "effects/TwoColor.cpp"
 #include "effects/Spectrum0.cpp"
 #include "effects/Wander.cpp"
+#include "effects/Wave0.cpp"
+#include "effects/SpectrumLine.cpp"
 
 Effects::Effects(){
-  effect[0] = &spectrum0;
-  cEffect[0] = SPECTRUM_0;
-  effect[1] = &diffusion;
-  cEffect[1] = DIFFUSION;
+  effect[0] = &randomOn;
+  cEffect[0] = RANDOM_ON;
+  effect[1] = &twoColor;
+  cEffect[1] = TWO_COLOR;
   lastRun = 0;
 }
 
@@ -34,6 +36,10 @@ void Effects::run(EffectData &data){
     strip.show();
   }
 }
+void Effects::randomize(){
+  effect[0]->randomize();
+  effect[1]->randomize();
+}
 
 void Effects::updateShouldStep(EffectData &data){
   unsigned long currMillis = millis();
@@ -51,9 +57,11 @@ void Effects::setEffect(uint8_t kEffect, Layer layer){
     case RANDOM_ON: effect[layer] = &randomOn; break;
     case SINGLE_FADE: effect[layer] = &singleFade; break;
     case TWO_COLOR: effect[layer] = &twoColor; break;
+    case WAVE0: effect[layer] = &wave0; break;
     case DIFFUSION: effect[layer] = &diffusion; break;
     case SPECTRUM_0: effect[layer] = &spectrum0; break;
     case WANDER: effect[layer] = &wander; break;
+    case SPECTRUM_LINE: effect[layer] = &spectrumLine; break;
   }
   effect[layer] -> randomize();
 }
