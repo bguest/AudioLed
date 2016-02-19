@@ -25,6 +25,13 @@ void Sign::black(){
   }
 }
 
+void Sign::push(){
+  for(uint8_t i = 0; i<LED_COUNT; i++){
+    Pixel *pixel = &pixels[i];
+    pixel->push();
+  }
+}
+
 Pixel* Sign::pixel(uint8_t index){
   uint8_t x = ledXY[index][0];
   uint8_t y = ledXY[index][1];

@@ -2,6 +2,7 @@
 
 Tempo::Tempo(){
   tapIdx = 0;
+  isDoubleTap = false;
   tempo = 1000;
 }
 
@@ -23,6 +24,7 @@ void Tempo::runCalc(){
 
   uint8_t beats = 0;
   uint16_t durration = 0;
+  isDoubleTap = false;
 
   for(uint8_t idx = 1; idx < TAP_COUNT; idx++){
     int16_t diff = tapTimes[idx] - tapTimes[idx - 1];
@@ -31,6 +33,7 @@ void Tempo::runCalc(){
       beats++;
       durration += diff;
     }else if(diff > 0 && diff < DOUBLE_TAP_PERIOD){
+      isDoubleTap = true;
       tapTimes[idx] = tapTimes[idx-1];
     }
   }

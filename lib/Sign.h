@@ -12,6 +12,7 @@ class Sign{
     void init();
     void off();
     void black();
+    void push();
     Pixel* pixel(uint8_t x, uint8_t y);
     Pixel* pixel(uint8_t index);
     Pixel* randomPixel();

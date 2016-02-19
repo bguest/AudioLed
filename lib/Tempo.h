@@ -12,6 +12,7 @@ class Tempo{
     void init();
     void tap();
     uint16_t tempo;
+    bool isDoubleTap;
 
   private:
     const uint16_t MAXIMUM_PERIOD = 2500;

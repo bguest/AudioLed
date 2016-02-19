@@ -7,7 +7,9 @@
 #include "effects/Spectrum0.cpp"
 #include "effects/Wander.cpp"
 #include "effects/Wave0.cpp"
-#include "effects/SpectrumLine.cpp"
+#ifdef USE_LINE_SPECTRUM
+  #include "effects/SpectrumLine.cpp"
+#endif
 
 Effects::Effects(){
   effect[0] = &randomOn;
@@ -28,7 +30,6 @@ void Effects::run(EffectData &data){
   unsigned long currMillis = millis();
   if(currMillis - lastRun > UPDATE_DURRATION){
     lastRun = currMillis;
-    data.tempo = 2000;
     this->updateShouldStep(data);
     effect[0] -> run(sign, data);
     effect[1] -> run(sign, data);
@@ -61,7 +62,9 @@ void Effects::setEffect(uint8_t kEffect, Layer layer){
     case DIFFUSION: effect[layer] = &diffusion; break;
     case SPECTRUM_0: effect[layer] = &spectrum0; break;
     case WANDER: effect[layer] = &wander; break;
+#ifdef USE_LINE_SPECTRUM
     case SPECTRUM_LINE: effect[layer] = &spectrumLine; break;
+#endif
   }
   effect[layer] -> randomize();
 }

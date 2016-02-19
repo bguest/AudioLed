@@ -5,7 +5,7 @@ RandomOn::RandomOn(){
 }
 
 void RandomOn::randomize(){
-  onCount = random(LED_COUNT/);
+  onCount = random(LED_COUNT/2);
   shouldReset = true;
   turnOn = true;
 }

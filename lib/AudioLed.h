@@ -10,6 +10,8 @@
 #define RIGHT_IR      0xFA0E2992
 #define CENTER_IR     0x133620BA
 
+#define USE_LINE_SPECTRUM 0
+
 #include "Sound.h"
 #include "Effects.h"
 #include "Tempo.h"

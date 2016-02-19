@@ -12,7 +12,9 @@
 #include "effects/Spectrum0.h"
 #include "effects/Wander.h"
 #include "effects/Wave0.h"
-#include "effects/SpectrumLine.h"
+#ifdef USE_LINE_SPECTRUM 
+  #include "effects/SpectrumLine.h"
+#endif
 
 #include "Adafruit_WS2801.h"
 
@@ -28,7 +30,9 @@ typedef const enum _EFFECTS {
   RANDOM_ON = 0,
   WANDER,
   SPECTRUM_0,
+#ifdef USE_LINE_SPECTRUM
   SPECTRUM_LINE,
+#endif
 
   SINGLE_FADE,
   TWO_COLOR,
@@ -63,7 +67,11 @@ class Effects{
     TwoColor twoColor;
     Diffusion diffusion;
     Spectrum0 spectrum0;
+
+  #ifdef USE_LINE_SPECTRUM
     SpectrumLine spectrumLine;
+  #endif
+
     Wander wander;
     Wave0 wave0;
 
