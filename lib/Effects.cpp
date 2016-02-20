@@ -12,9 +12,9 @@
 #endif
 
 Effects::Effects(){
-  effect[0] = &randomOn;
+  effect[0]  = &randomOn;
   cEffect[0] = RANDOM_ON;
-  effect[1] = &twoColor;
+  effect[1]  = &twoColor;
   cEffect[1] = TWO_COLOR;
   lastRun = 0;
 }
@@ -37,10 +37,11 @@ void Effects::run(EffectData &data){
     strip.show();
   }
 }
-void Effects::randomize(){
-  effect[0]->randomize();
-  effect[1]->randomize();
+
+void Effects::push(IrInput input, uint8_t layer){
+  effect[layer]->push(input);
 }
+
 
 void Effects::updateShouldStep(EffectData &data){
   unsigned long currMillis = millis();
@@ -52,7 +53,7 @@ void Effects::updateShouldStep(EffectData &data){
   }
 }
 
-void Effects::setEffect(uint8_t kEffect, Layer layer){
+void Effects::setEffect(uint8_t kEffect, uint8_t layer){
   cEffect[layer] = kEffect;
   switch(kEffect){
     case RANDOM_ON: effect[layer] = &randomOn; break;
@@ -66,16 +67,15 @@ void Effects::setEffect(uint8_t kEffect, Layer layer){
     case SPECTRUM_LINE: effect[layer] = &spectrumLine; break;
 #endif
   }
-  effect[layer] -> randomize();
 }
 
-void Effects::nextEffect(Layer layer){
+void Effects::nextEffect(uint8_t layer){
   cEffect[layer]++;
   cEffect[layer] = cEffect[layer] % EFFECT_COUNT;
   this -> setEffect(cEffect[layer], layer);
 }
 
-void Effects::prevEffect(Layer layer){
+void Effects::prevEffect(uint8_t layer){
   if(cEffect[layer] == 0){
     cEffect[layer] = EFFECT_COUNT - 1;
   }else{

@@ -12,7 +12,7 @@
 #include "effects/Spectrum0.h"
 #include "effects/Wander.h"
 #include "effects/Wave0.h"
-#ifdef USE_LINE_SPECTRUM 
+#ifdef USE_LINE_SPECTRUM
   #include "effects/SpectrumLine.h"
 #endif
 
@@ -20,11 +20,9 @@
 
 const uint8_t UPDATE_DURRATION = 5;
 
-typedef const enum _Layer {
-  TextLayer = 0,
-  ColorLayer,
-  LayerCount
-} Layer;
+#define TEXT_LAYER 0
+#define COLOR_LAYER 1
+#define LAYER_COUNT 2
 
 typedef const enum _EFFECTS {
   RANDOM_ON = 0,
@@ -47,10 +45,9 @@ class Effects{
     Effects();
     void init();
     void run(EffectData &data);
-    void randomize();
-    void setEffect(uint8_t kEffect, Layer layer);
-    void nextEffect(Layer layer);
-    void prevEffect(Layer layer);
+    void push(IrInput input, uint8_t layer);
+    void nextEffect(uint8_t layer);
+    void prevEffect(uint8_t layer);
 
   private:
     unsigned long lastRun;
@@ -59,8 +56,9 @@ class Effects{
 
     Sign sign;
 
-    uint8_t cEffect[LayerCount];
-    Effect* effect[LayerCount];
+    void setEffect(uint8_t kEffect, uint8_t layer);
+    uint8_t cEffect[LAYER_COUNT];
+    Effect* effect[LAYER_COUNT];
 
     RandomOn randomOn;
     SingleFade singleFade;

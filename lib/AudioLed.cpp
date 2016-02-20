@@ -1,55 +1,66 @@
 #include "AudioLed.h"
 
 AudioLed::AudioLed(){
-  irrecv = new IRrecv(IR_PIN);
+  pushLayer = LAYER_COUNT;
 }
 
 void AudioLed::init(){
-  irrecv -> enableIRIn();
 
   for(uint8_t i=0; i<FREQ_COUNT; i++){
     data.freqAmp[i]=0;
     data.maxFreqAmp[i]=0;
   }
+
   tempo.init();
   sound.init();
   effects.init();
+  remote.init();
 }
 
 void AudioLed::run(){
-
-  if (irrecv -> decode(&irResults)) {
-    this -> handleIrCode(irResults.value);
-    irrecv -> resume(); // Receive the next value
+  remote.run();
+  if(remote.code != NONE){
+    this->handleRemote();
   }
+
   data.tempo = tempo.tempo;
   sound.run(data);
   effects.run(data);
 }
 
-void AudioLed::handleIrCode(uint32_t irCode){
+void AudioLed::handleRemote(){
+  IrInput input = remote.code;
 
-  switch(irCode){
-    case PLAY_PAUSE_IR:
+  switch(input){
+    case PLAY_PAUSE:
+      pushLayer++;
+      pushLayer = pushLayer % (LAYER_COUNT + 1);
+      return;
+    case MENUE:
+      pushLayer = LAYER_COUNT;
+      return;
+  }
+
+  if(pushLayer != LAYER_COUNT){
+    effects.push(input, pushLayer);
+    return;
+  }
+
+  switch(input){
+    case UP:
+      effects.nextEffect(COLOR_LAYER);
       break;
-    case MENUE_IR:
-      effects.randomize();
+    case DOWN:
+      effects.prevEffect(COLOR_LAYER);
       break;
-    case UP_IR:
-      effects.nextEffect(ColorLayer);
+    case LEFT:
+      effects.prevEffect(TEXT_LAYER);
       break;
-    case DOWN_IR:
-      effects.prevEffect(ColorLayer);
-      break;
-    case LEFT_IR:
-      effects.prevEffect(TextLayer);
-      break;
-    case RIGHT_IR:
-      effects.nextEffect(TextLayer);
+    case RIGHT:
+      effects.nextEffect(TEXT_LAYER);
       break;
     case CENTER_IR:
       tempo.tap();
       break;
   }
-
 }
