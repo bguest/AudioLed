@@ -9,6 +9,9 @@ class CenterPulse : public Effect {
     void randomize();
     void run(Sign &sign, EffectData &data);
 
+  private:
+    uint8_t smoothing;
+
 };
 
 #endif

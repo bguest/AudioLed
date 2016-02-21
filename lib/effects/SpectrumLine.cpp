@@ -16,10 +16,7 @@ void SpectrumLine::run(Sign &sign, EffectData &data){
 
   for(uint8_t i=0; i< min; i++){
     Pixel* pixel = sign.pixel(i, lineHeight);
-    if(data.freqAmp[i] > data.maxFreqAmp[i] / 3){
-      pixel->isOn = true;
-    }
-    pixel->hue[0] = (uint32_t)data.freqAmp[i]/data.maxFreqAmp[i]*0xFFFF;
+    pixel->hue[0] = map(data.freqAmp[i],0,data.maxFreqAmp[i],0,0xFFFF);
   }
 
 }

@@ -32,13 +32,18 @@ void Sound::init(){
 
 void Sound::run(EffectData &data){
 
-  for(uint8_t i = 0; i<7; i++) {
+  data.volume = 0;
+  for(uint8_t i = 0; i<FREQ_COUNT; i++) {
     data.freqAmp[i] = (analogRead(AUDIO_OUT) + analogRead(AUDIO_OUT))/2;
+    data.volume += data.freqAmp[i];
     if (data.freqAmp[i] > data.maxFreqAmp[i]){
       data.maxFreqAmp[i] = data.freqAmp[i];
     }
     digitalWrite(STROBE, HIGH);
     digitalWrite(STROBE, LOW);
+  }
+  if(data.volume > data.maxVolume){
+    data.maxVolume = data.volume;
   }
 }
 

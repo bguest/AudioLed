@@ -41,7 +41,12 @@ void Wave0::push(IrInput input){
         influence--;
       }
       break;
-    case CENTER: influence = 0b1111; break;
+    case UP: if( forceConstant < 0xFFF ){ ++forceConstant; }
+    case DOWN: if( forceConstant > 0 ){ --forceConstant; }
+    case CENTER:
+      influence = 0b1111;
+      forceConstant = 30;
+      break;
   }
 }
 
