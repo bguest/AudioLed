@@ -8,6 +8,7 @@ class SpectrumLine : public Effect{
     SpectrumLine();
     void randomize();
     void run(Sign &sign, EffectData &data);
+    void push(IrInput input);
 
   private:
     uint8_t lineHeight;

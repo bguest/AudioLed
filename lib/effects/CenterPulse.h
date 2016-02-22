@@ -6,8 +6,8 @@
 class CenterPulse : public Effect {
   public:
     CenterPulse();
-    void randomize();
     void run(Sign &sign, EffectData &data);
+    void push(IrInput input);
 
   private:
     uint8_t smoothing;

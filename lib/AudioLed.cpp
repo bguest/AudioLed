@@ -59,7 +59,7 @@ void AudioLed::handleRemote(){
     case RIGHT:
       effects.nextEffect(TEXT_LAYER);
       break;
-    case CENTER_IR:
+    case CENTER:
       tempo.tap();
       break;
   }

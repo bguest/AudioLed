@@ -1,9 +1,6 @@
 #ifndef AUDIO_LED_H
 #define AUDIO_LED_H
 
-
-#define USE_LINE_SPECTRUM 0
-
 #include "Sound.h"
 #include "Effects.h"
 #include "Tempo.h"

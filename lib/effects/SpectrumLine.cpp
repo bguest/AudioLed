@@ -2,6 +2,7 @@
 
 SpectrumLine::SpectrumLine(){
   this->randomize();
+  lineHeight = 2;
 }
 
 void SpectrumLine::randomize(){
@@ -19,4 +20,12 @@ void SpectrumLine::run(Sign &sign, EffectData &data){
     pixel->hue[0] = map(data.freqAmp[i],0,data.maxFreqAmp[i],0,0xFFFF);
   }
 
+}
+void SpectrumLine::push(IrInput input){
+  Effect::push(input);
+
+  switch(input){
+    case UP: if(lineHeight < LED_HEIGHT-1){ ++lineHeight;} break;
+    case DOWN: if(lineHeight > 0){ --lineHeight;} break;
+  }
 }

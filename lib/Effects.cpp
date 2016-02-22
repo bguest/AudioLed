@@ -10,6 +10,7 @@
 #ifdef USE_LINE_SPECTRUM
   #include "effects/SpectrumLine.cpp"
 #endif
+#include "effects/CenterPulse.cpp"
 
 Effects::Effects(){
   effect[0]  = &randomOn;
@@ -66,6 +67,7 @@ void Effects::setEffect(uint8_t kEffect, uint8_t layer){
 #ifdef USE_LINE_SPECTRUM
     case SPECTRUM_LINE: effect[layer] = &spectrumLine; break;
 #endif
+    case CENTER_PULSE: effect[layer] = &centerPulse; break;
   }
 }
 

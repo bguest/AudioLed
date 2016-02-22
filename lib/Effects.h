@@ -4,6 +4,8 @@
 #define DATA_PIN 11
 #define CLK_PIN 13
 
+#define USE_LINE_SPECTRUM 1
+
 #include "effects/Effect.h"
 #include "effects/Diffusion.h"
 #include "effects/RandomOn.h"
@@ -15,6 +17,7 @@
 #ifdef USE_LINE_SPECTRUM
   #include "effects/SpectrumLine.h"
 #endif
+#include "effects/CenterPulse.h"
 
 #include "Adafruit_WS2801.h"
 
@@ -31,6 +34,7 @@ typedef const enum _EFFECTS {
 #ifdef USE_LINE_SPECTRUM
   SPECTRUM_LINE,
 #endif
+  CENTER_PULSE,
 
   SINGLE_FADE,
   TWO_COLOR,
@@ -69,6 +73,7 @@ class Effects{
   #ifdef USE_LINE_SPECTRUM
     SpectrumLine spectrumLine;
   #endif
+    CenterPulse centerPulse;
 
     Wander wander;
     Wave0 wave0;
