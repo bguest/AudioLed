@@ -4,7 +4,7 @@
 #define DATA_PIN 11
 #define CLK_PIN 13
 
-#define USE_LINE_SPECTRUM 1
+#define USE_LINE_SPECTRUM
 //#define USE_SINGLE_FADE
 
 #include "effects/Effect.h"
