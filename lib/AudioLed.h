@@ -21,6 +21,7 @@ class AudioLed{
     EffectData data;
     uint8_t pushLayer;
     void handleRemote();
+    void reset();
 };
 
 #endif

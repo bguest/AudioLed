@@ -11,6 +11,7 @@ class CenterPulse : public Effect {
 
   private:
     uint8_t smoothing;
+    uint16_t maxVal;
 
 };
 

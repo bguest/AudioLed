@@ -61,6 +61,13 @@ void AudioLed::handleRemote(){
       break;
     case CENTER:
       tempo.tap();
+      if(tempo.isDoubleTap){
+        this->reset();
+      }
       break;
   }
+}
+
+void AudioLed::reset(){
+  effects.reset();
 }

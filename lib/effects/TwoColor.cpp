@@ -16,7 +16,7 @@ void TwoColor::run(Sign &sign, EffectData &data){
     Pixel* pixel = sign.pixel(i);
     uint16_t h = pixel->isOn ? hue[0] : hue[1];
     pixel->hue[0] = h << 8;
-    pixel->brightness = 0xFFFF;
+    pixel->value = 0xFFFF;
   }
 
 }

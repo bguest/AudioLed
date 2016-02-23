@@ -22,11 +22,11 @@ void Diffusion::run(Sign &sign, EffectData &data){
     for(uint8_t j = 0; j<LED_HEIGHT; j++){
       Pixel* pixel = sign.pixel(i,j);
       if(pixel->isOn){
-        pixel->hue[1] = 0xFFFF;
+        pixel->hue[0] = 0xFFFF;
       }else{
         this->diffuse(sign, i, j, deltaT);
       }
-      pixel->brightness = 0xFFFF;
+      pixel->value = 0xFFFF;
     }
   }
 }

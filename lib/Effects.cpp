@@ -2,7 +2,9 @@
 #include "effects/Effect.cpp"
 #include "effects/Diffusion.cpp"
 #include "effects/RandomOn.cpp"
-#include "effects/SingleFade.cpp"
+#ifdef USE_SINGLE_FADE
+  #include "effects/SingleFade.cpp"
+#endif
 #include "effects/TwoColor.cpp"
 #include "effects/Spectrum0.cpp"
 #include "effects/Wander.cpp"
@@ -13,10 +15,7 @@
 #include "effects/CenterPulse.cpp"
 
 Effects::Effects(){
-  effect[0]  = &randomOn;
-  cEffect[0] = RANDOM_ON;
-  effect[1]  = &twoColor;
-  cEffect[1] = TWO_COLOR;
+  this->reset();
   lastRun = 0;
 }
 
@@ -25,6 +24,13 @@ void Effects::init(){
   strip = Adafruit_WS2801(LED_COUNT, DATA_PIN, CLK_PIN);
   strip.begin();
   strip.show();
+}
+
+void Effects::reset(){
+  effect[0]  = &randomOn;
+  cEffect[0] = RANDOM_ON;
+  effect[1]  = &twoColor;
+  cEffect[1] = TWO_COLOR;
 }
 
 void Effects::run(EffectData &data){
@@ -58,7 +64,9 @@ void Effects::setEffect(uint8_t kEffect, uint8_t layer){
   cEffect[layer] = kEffect;
   switch(kEffect){
     case RANDOM_ON: effect[layer] = &randomOn; break;
+#ifdef USE_SINGLE_FADE
     case SINGLE_FADE: effect[layer] = &singleFade; break;
+#endif
     case TWO_COLOR: effect[layer] = &twoColor; break;
     case WAVE0: effect[layer] = &wave0; break;
     case DIFFUSION: effect[layer] = &diffusion; break;
@@ -69,7 +77,30 @@ void Effects::setEffect(uint8_t kEffect, uint8_t layer){
 #endif
     case CENTER_PULSE: effect[layer] = &centerPulse; break;
   }
+#ifdef DEBUG
+  this->printEffect(kEffect);
+#endif
 }
+
+#ifdef DEBUG
+void Effects::printEffect(uint8_t kEffect){
+  switch(kEffect){
+    case RANDOM_ON: Serial.println("Random ON"); break;
+#ifdef USE_SINGLE_FADE
+    case SINGLE_FADE: Serial.println("Single Fade"); break;
+#endif
+    case TWO_COLOR: Serial.println("Two Color"); break;
+    case WAVE0: Serial.println("Wave0"); break;
+    case DIFFUSION: Serial.println("Diffusion"); break;
+    case SPECTRUM_0: Serial.println("Spectrum0"); break;
+    case WANDER: Serial.println("Wander"); break;
+#ifdef USE_LINE_SPECTRUM
+    case SPECTRUM_LINE: Serial.println("SpectrumLine");  break;
+#endif
+    case CENTER_PULSE: Serial.println("CenterPulse"); break;
+  }
+}
+#endif
 
 void Effects::nextEffect(uint8_t layer){
   cEffect[layer]++;

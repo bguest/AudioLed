@@ -21,7 +21,7 @@ void Sign::off(){
 void Sign::black(){
   for(uint8_t i = 0; i<LED_COUNT; i++){
     Pixel *pixel = &pixels[i];
-    pixel->brightness = 0;
+    pixel->value = 0;
   }
 }
 

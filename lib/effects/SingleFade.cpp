@@ -28,13 +28,13 @@ void SingleFade::run(Sign &sign, EffectData &data){
       pixel->hue[0] += random(maxHueStep);
     }
 
-    uint8_t brightness;
+    uint8_t value;
     if(i == 0){
-       brightness = 255*(currMillis - lastStep)/data.tempo;
+       value = 255*(currMillis - lastStep)/data.tempo;
     }else{
-       brightness = 255 - 255*(currMillis - lastStep)/data.tempo;
+       value = 255 - 255*(currMillis - lastStep)/data.tempo;
     }
-    pixel->brightness = brightness << 8;
+    pixel->value = value << 8;
   }
 }
 
