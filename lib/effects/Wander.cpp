@@ -30,7 +30,7 @@ void Wander::run(Sign &sign, EffectData &data){
   y = newY;
 
   Pixel* pixel = sign.pixel(x,y);
-  pixel->isOn = true;
+  pixel->direction = Up;
 
 }
 
@@ -53,7 +53,7 @@ bool Wander::valid(uint8_t newX, uint8_t newY, Sign& sign){
   if(newY >= LED_HEIGHT){ return false;}
 
   Pixel* pixel = sign.pixel(newX, newY);
-  if(pixel-> isOn){ return false; }
+  if(pixel-> direction == Up){ return false; }
 
   return true;
 }

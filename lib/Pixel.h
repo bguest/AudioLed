@@ -5,10 +5,14 @@
 
 #include "Arduino.h"
 
+typedef enum _Direction{
+  Up, Off, Down
+} Direction;
+
 class Pixel{
   public:
     Pixel();
-    bool isOn;
+    Direction direction;
     uint16_t hue[3];
     uint16_t saturation;
     uint16_t value;
