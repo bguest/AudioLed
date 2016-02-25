@@ -1,44 +1,74 @@
 #include "TwoColor.h"
+#define HUE_STEP 0x0100
+#define FADE_STEP 1
+#define FADE_MAX 30
+#define IS_OFF_MASK 0b10
+#define IS_FADE_MASK 0b01
 
 TwoColor::TwoColor(){
   this -> randomize();
 }
 
 void TwoColor::randomize(){
-  isTurnOffOff = true;
-  hue[0] = random(0xFF);
-  hue[1] = random(0xFF);
-  hue[2] = random(0xFF);
+  settingMask = random(0,0b11);
+  for(uint8_t i=0; i<3; i++){
+    hue[i] = random(0xFF);
+    fadeSpeed[i] = random(-FADE_MAX, FADE_MAX);
+  }
 }
 
 void TwoColor::push(IrInput input){
   Effect::push(input);
+  int8_t idx = -1;
   switch(input){
-    case UP: hue[1]+= 2; break;
-    case LEFT: hue[0]+= 2; break;
-    case DOWN: hue[2]+= 2; break;
-    case RIGHT: isTurnOffOff = !isTurnOffOff; break;
+    case UP: idx = 1; break;
+    case LEFT: idx = 0; break;
+    case DOWN: idx = 2; break;
+    case RIGHT:
+               settingMask++;
+               if(settingMask > 0b11){settingMask = 0;}
+               break;
   }
+
+  if(idx < 0 ){return;}
+
+  if( (settingMask & IS_FADE_MASK) > 0){
+    fadeSpeed[idx]+= FADE_STEP;
+    if(fadeSpeed[idx] > FADE_MAX){
+      fadeSpeed[idx] = -FADE_MAX;
+    }
+  }else{
+    hue[idx] += HUE_STEP;
+  }
+
 }
 
 void TwoColor::run(Sign &sign, EffectData &data){
   if(!data.shouldStep){ return; }
 
+  if( (settingMask & IS_FADE_MASK) > 0){
+    for(uint8_t idx = 0; idx < 3; idx++){
+      hue[idx]+=fadeSpeed[idx];
+    }
+  }
+
   for(uint8_t i=0; i<LED_COUNT; i++){
+
+    uint8_t idx = -1;
     Pixel* pixel = sign.pixel(i);
-    uint16_t h;
     switch(pixel->direction){
-      case Up: h = hue[1]; break;
-      case Off: h = hue[0]; break;
-      case Down: h = hue[2]; break;
+      case Up: idx = 1; break;
+      case Off: idx = 0; break;
+      case Down: idx = 2; break;
     }
 
-    if(isTurnOffOff && pixel->direction == Off){
+    if( (settingMask & IS_OFF_MASK) > 0 && pixel->direction == Off ){
       pixel->value = 0;
     }else{
-      pixel->hue[0] = h << 8;
+      pixel->hue[0] = hue[idx];
       pixel->value = 0xFFFF;
     }
+
   }
 
 }
