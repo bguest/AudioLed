@@ -9,7 +9,9 @@ class Sound {
     void run(EffectData &data);
 
   private:
-    uint16_t maxFreqAmp[7];
+    unsigned long lastCollect;
+    uint16_t volume;
+    uint16_t freqAmp[7];
 
 };
 #endif

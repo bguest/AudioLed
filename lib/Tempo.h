@@ -16,7 +16,7 @@ class Tempo{
 
   private:
     const uint16_t MAXIMUM_PERIOD = 2500;
-    const uint16_t DOUBLE_TAP_PERIOD = 200;
+    const uint16_t DOUBLE_TAP_PERIOD = 300;
 
     uint8_t tapIdx;
     uint16_t tapTimes[TAP_COUNT];

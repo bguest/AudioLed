@@ -19,7 +19,7 @@ void Spectrum0::run(Sign &sign, EffectData &data){
   for(uint8_t i=0; i< min; i++){
 
     // Update MaxFreq
-    if(currMillis - lastMax[i] > RESET_TIME){
+    if(currMillis - lastMax[i] > data.tempo){
       maxAmp[i] = 0;
       lastMax[i] = currMillis;
     }
@@ -38,10 +38,17 @@ void Spectrum0::run(Sign &sign, EffectData &data){
         pixel -> direction = Up;
       }
       if(isHighOn && maxAmp[i] < (j+1)*dotSize && maxAmp[i] > j*dotSize ){
-        pixel -> direction = Up;
+        pixel -> direction = Down;
       }
     } 
   }
 
 }
 
+void Spectrum0::push(IrInput input){
+  Effect::push(input);
+  switch(input){
+    case LEFT: isHighOn = !isHighOn; break;
+
+  }
+}

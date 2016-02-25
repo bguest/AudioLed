@@ -4,13 +4,12 @@
 #include "Arduino.h"
 #include "Effect.h"
 
-const int RESET_TIME = 5000;
-
 class Spectrum0 : public Effect {
 
   public:
     Spectrum0();
     void run(Sign &sign, EffectData &data);
+    void push(IrInput input);
 
   private:
     uint16_t maxAmp[FREQ_COUNT];

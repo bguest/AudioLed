@@ -12,7 +12,7 @@ class TwoColor : public Effect{
     void randomize();
 
   private:
-    uint8_t hue[2];
+    uint8_t hue[3];
 
 };
 #endif

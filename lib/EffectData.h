@@ -9,6 +9,7 @@
 
 struct EffectData{
   uint16_t tempo; // Period between taps
+  uint16_t collectTime; // Time to Envalope Sound
   bool shouldStep;
   uint16_t volume;
   uint16_t maxVolume;
