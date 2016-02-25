@@ -15,6 +15,7 @@ class Spectrum0 : public Effect {
     uint16_t maxAmp[FREQ_COUNT];
     bool isHighOn;
     unsigned long lastMax[FREQ_COUNT];
+    uint8_t rolloff;
 
 };
 

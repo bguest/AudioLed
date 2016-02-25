@@ -5,6 +5,8 @@
 #define RESET 3
 #define AUDIO_OUT A0
 
+const uint8_t ROLLOFF_DURRATION = 5;
+
 void Sound::init(){
   //
   //Set spectrum Shield pin configurations
@@ -53,17 +55,28 @@ void Sound::run(EffectData &data){
   // Update if > Sound collect time
   unsigned long currMillis = millis();
 
-  if(currMillis - lastCollect > data.collectTime){
+  if(currMillis - lastCollect > ROLLOFF_DURRATION){
     lastCollect = currMillis;
+
     for(uint8_t i = 0; i<FREQ_COUNT; i++) {
-      data.freqAmp[i] = freqAmp[i];
+      if(freqAmp[i] > data.freqAmp[i]){
+        data.freqAmp[i] = freqAmp[i];
+      }else{
+        data.freqAmp[i] = (data.freqAmp[i]*data.rolloff)/100;
+      }
+
       if(freqAmp[i] > data.maxFreqAmp[i]){
         data.maxFreqAmp[i] = freqAmp[i];
       }
       freqAmp[i] = 0;
     }
 
-    data.volume = volume;
+    if(volume > data.volume){
+      data.volume = volume;
+    }else{
+      data.volume = (data.volume*data.rolloff)/100;
+    }
+
     if(volume > data.maxVolume){
       data.maxVolume = volume;
     }

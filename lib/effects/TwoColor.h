@@ -9,10 +9,12 @@ class TwoColor : public Effect{
   public:
     TwoColor();
     void run(Sign &sign, EffectData &data);
+    void push(IrInput input);
     void randomize();
 
   private:
     uint8_t hue[3];
+    bool isTurnOffOff;
 
 };
 #endif

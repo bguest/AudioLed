@@ -6,12 +6,14 @@ Spectrum0::Spectrum0(){
     lastMax[i] = 0;
   }
   isHighOn = false;
+  rolloff = 98;
 }
 
 void Spectrum0::run(Sign &sign, EffectData &data){
   unsigned long currMillis = millis();
 
   data.shouldStep = true;
+  data.rolloff = rolloff;
 
   sign.off();
   uint8_t min = min(FREQ_COUNT, LED_WIDTH);
@@ -19,14 +21,11 @@ void Spectrum0::run(Sign &sign, EffectData &data){
   for(uint8_t i=0; i< min; i++){
 
     // Update MaxFreq
-    if(currMillis - lastMax[i] > data.tempo){
-      maxAmp[i] = 0;
-      lastMax[i] = currMillis;
-    }
-
     if(data.freqAmp[i] > maxAmp[i]){
       maxAmp[i] = data.freqAmp[i];
       lastMax[i] = currMillis;
+    }else if( currMillis - lastMax[i] > data.tempo / 2){
+      maxAmp[i] = (maxAmp[i]*rolloff)/100;
     }
 
     uint8_t dotSize = data.maxFreqAmp[i]/LED_HEIGHT;
@@ -48,7 +47,8 @@ void Spectrum0::run(Sign &sign, EffectData &data){
 void Spectrum0::push(IrInput input){
   Effect::push(input);
   switch(input){
-    case LEFT: isHighOn = !isHighOn; break;
-
+    case UP: if(rolloff < 100){rolloff++;} break;
+    case DOWN: if(rolloff > 0){rolloff--;} break;
+    case RIGHT: isHighOn = !isHighOn; break;
   }
 }
