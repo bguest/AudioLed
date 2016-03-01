@@ -41,6 +41,7 @@ void Effects::run(EffectData &data){
     effect[0] -> run(sign, data);
     effect[1] -> run(sign, data);
     this -> updateStrip();
+    this -> updateStrip(data);
     strip.show();
   }
 }
@@ -124,6 +125,17 @@ void Effects::updateStrip(){
     Pixel* pixel = sign.pixel(idx);
     strip.setPixelColor(idx-offset, pixel->color());
   }
-
 }
 
+void Effects::updateStrip(EffectData &data){
+  if( data.pushLayer != LAYER_COUNT){
+    uint8_t offset = 0;
+    for(uint8_t idx = offset; idx < offset+3; idx++){
+      if(data.pushLayer == TEXT_LAYER){
+        strip.setPixelColor(idx, 0x0000FF);
+      }else if( data.pushLayer == COLOR_LAYER){
+        strip.setPixelColor(idx, 0x00FF00);
+      }
+    }
+  }
+}

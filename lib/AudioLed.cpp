@@ -24,6 +24,7 @@ void AudioLed::run(){
   if(remote.code != NONE){
     this->handleRemote();
   }
+  data.pushLayer = pushLayer;
 
   data.tempo = tempo.tempo;
   sound.run(data);

@@ -92,6 +92,7 @@ class Effects{
     Adafruit_WS2801 strip;
 
     void updateStrip();
+    void updateStrip(EffectData &data);
 };
 #endif
 
