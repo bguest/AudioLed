@@ -1,4 +1,5 @@
 #include "Effects.h"
+
 #include "effects/Effect.cpp"
 #include "effects/Diffusion.cpp"
 #include "effects/RandomOn.cpp"
@@ -7,12 +8,15 @@
 #endif
 #include "effects/TwoColor.cpp"
 #include "effects/Spectrum0.cpp"
-#include "effects/Wander.cpp"
+#ifdef USE_WANDER
+  #include "effects/Wander.cpp"
+#endif
 #include "effects/Wave0.cpp"
 #ifdef USE_LINE_SPECTRUM
   #include "effects/SpectrumLine.cpp"
 #endif
 #include "effects/CenterPulse.cpp"
+#include "effects/TimeDomain.cpp"
 
 Effects::Effects(){
   this->reset();
@@ -64,6 +68,7 @@ void Effects::updateShouldStep(EffectData &data){
 void Effects::setEffect(uint8_t kEffect, uint8_t layer){
   cEffect[layer] = kEffect;
   switch(kEffect){
+    case NO_EFFECT: effect[layer] = &noEffect; break;
     case RANDOM_ON: effect[layer] = &randomOn; break;
 #ifdef USE_SINGLE_FADE
     case SINGLE_FADE: effect[layer] = &singleFade; break;
@@ -72,11 +77,14 @@ void Effects::setEffect(uint8_t kEffect, uint8_t layer){
     case WAVE0: effect[layer] = &wave0; break;
     case DIFFUSION: effect[layer] = &diffusion; break;
     case SPECTRUM_0: effect[layer] = &spectrum0; break;
+#ifdef USE_WANDER
     case WANDER: effect[layer] = &wander; break;
+#endif
 #ifdef USE_LINE_SPECTRUM
     case SPECTRUM_LINE: effect[layer] = &spectrumLine; break;
 #endif
     case CENTER_PULSE: effect[layer] = &centerPulse; break;
+    case TIME_DOMAIN: effect[layer] = &timeDomain; break;
   }
 #ifdef DEBUG
   this->printEffect(kEffect);
@@ -94,11 +102,14 @@ void Effects::printEffect(uint8_t kEffect){
     case WAVE0: Serial.println("Wave0"); break;
     case DIFFUSION: Serial.println("Diffusion"); break;
     case SPECTRUM_0: Serial.println("Spectrum0"); break;
+#ifdef USE_WANDER
     case WANDER: Serial.println("Wander"); break;
+#endif
 #ifdef USE_LINE_SPECTRUM
     case SPECTRUM_LINE: Serial.println("SpectrumLine");  break;
 #endif
     case CENTER_PULSE: Serial.println("CenterPulse"); break;
+    case TIME_DOMAIN: Serial.println("TimeDomain"); break;
   }
 }
 #endif

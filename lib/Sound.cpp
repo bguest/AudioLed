@@ -39,7 +39,7 @@ void Sound::run(EffectData &data){
   uint16_t currVolume = 0;
 
   for(uint8_t i = 0; i<FREQ_COUNT; i++) {
-    currAmp = (analogRead(AUDIO_OUT) + analogRead(AUDIO_OUT))/2;
+    currAmp = ( analogRead(AUDIO_OUT) + analogRead(AUDIO_OUT) )/2;
     currVolume += currAmp;
     if (currAmp > freqAmp[i]){
       freqAmp[i] = currAmp;

@@ -7,6 +7,8 @@
 
 #include "Arduino.h"
 
+const uint8_t UINT8_MAX_2 = UINT8_MAX/2;
+
 struct EffectData{
   uint16_t tempo; // Period between taps
   uint8_t pushLayer;

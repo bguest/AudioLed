@@ -6,6 +6,7 @@
 
 #define USE_LINE_SPECTRUM
 //#define USE_SINGLE_FADE
+//#define USE_WANDER
 
 #include "effects/Effect.h"
 #include "effects/Diffusion.h"
@@ -15,12 +16,15 @@
   #include "effects/SingleFade.h"
 #endif
 #include "effects/Spectrum0.h"
-#include "effects/Wander.h"
+#ifdef USE_WANDER
+  #include "effects/Wander.h"
+#endif
 #include "effects/Wave0.h"
 #ifdef USE_LINE_SPECTRUM
   #include "effects/SpectrumLine.h"
 #endif
 #include "effects/CenterPulse.h"
+#include "effects/TimeDomain.h"
 
 #include "Adafruit_WS2801.h"
 
@@ -32,12 +36,16 @@ const uint8_t UPDATE_DURRATION = 5;
 
 typedef const enum _EFFECTS {
   RANDOM_ON = 0,
+#ifdef USE_WANDER
   WANDER,
+#endif
   SPECTRUM_0,
+  TIME_DOMAIN,
 #ifdef USE_LINE_SPECTRUM
   SPECTRUM_LINE,
 #endif
   CENTER_PULSE,
+  NO_EFFECT,
 
 #ifdef USE_SINGLE_FADE
   SINGLE_FADE,
@@ -73,6 +81,7 @@ class Effects{
     uint8_t cEffect[LAYER_COUNT];
     Effect* effect[LAYER_COUNT];
 
+    Effect noEffect;
     RandomOn randomOn;
   #ifdef USE_SINGLE_FADE
     SingleFade singleFade;
@@ -80,13 +89,14 @@ class Effects{
     TwoColor twoColor;
     Diffusion diffusion;
     Spectrum0 spectrum0;
-
+    TimeDomain timeDomain;
   #ifdef USE_LINE_SPECTRUM
     SpectrumLine spectrumLine;
   #endif
     CenterPulse centerPulse;
-
+  #ifdef USE_WANDER
     Wander wander;
+  #endif
     Wave0 wave0;
 
     Adafruit_WS2801 strip;

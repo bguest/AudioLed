@@ -43,6 +43,8 @@ void Spectrum0::run(Sign &sign, EffectData &data){
   }
 
 }
+void push(IrInput input){
+}
 
 void Spectrum0::push(IrInput input){
   Effect::push(input);
