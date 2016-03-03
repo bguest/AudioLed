@@ -21,3 +21,11 @@ void RandomOn::run(Sign &sign, EffectData &data){
     pixel->direction = Up;
   }
 }
+
+void RandomOn::push(IrInput input){
+  Effect::push(input);
+  switch(input){
+    case DOWN: if(onCount > 0 ){ onCount--; } break;
+    case UP: if(onCount < LED_COUNT*2){ onCount++; } break;
+  }
+}

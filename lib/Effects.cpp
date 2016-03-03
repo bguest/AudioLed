@@ -140,13 +140,10 @@ void Effects::updateStrip(){
 
 void Effects::updateStrip(EffectData &data){
   if( data.pushLayer != LAYER_COUNT){
-    uint8_t offset = 0;
-    for(uint8_t idx = offset; idx < offset+3; idx++){
-      if(data.pushLayer == TEXT_LAYER){
-        strip.setPixelColor(idx, 0x0000FF);
-      }else if( data.pushLayer == COLOR_LAYER){
-        strip.setPixelColor(idx, 0x00FF00);
-      }
+    if(data.pushLayer == TEXT_LAYER){
+      strip.setPixelColor(0, 0xFFFFFF);
+    }else if( data.pushLayer == COLOR_LAYER){
+      strip.setPixelColor(13, 0xFFFFFF);
     }
   }
 }

@@ -6,7 +6,7 @@ TimeDomain::TimeDomain(){
   for(uint8_t i=0; i< LED_WIDTH; i++){
     volume[i] = 0;
   }
-  band = 0;
+  band = FREQ_COUNT;
 }
 
 const uint8_t PIXEL_HEIGHT = UINT8_MAX/LED_HEIGHT;
@@ -66,12 +66,7 @@ void TimeDomain::push(IrInput input){
   switch(input){
     case LEFT: if(band > 0 ){ band--; } break;
     case RIGHT: if(band < FREQ_COUNT){ band++; } break;
-    case UP:  break;
-    case DOWN:  break;
-    case CENTER: break;
   }
-  Serial.println(band);
-
 }
 
 void TimeDomain::pushVolume(uint8_t vol){

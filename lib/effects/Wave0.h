@@ -11,6 +11,7 @@ class Wave0: public Effect{
     void push(IrInput input);
 
   private:
+    bool isFixedBoundary;
     uint16_t forceConstant;
     uint32_t velocityConstant;
     unsigned long time[2];

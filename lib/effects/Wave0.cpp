@@ -8,6 +8,7 @@ Wave0::Wave0(){
 void Wave0::randomize(){
   forceConstant = random(20, 50);
   velocityConstant = random(0xF000, 0x20000);
+  isFixedBoundary = random(0, 1);
   unsigned long currMillis = millis();
   time[0] = currMillis;
   time[1] = currMillis + 5;
@@ -41,8 +42,16 @@ void Wave0::push(IrInput input){
         influence--;
       }
       break;
-    case UP: if( forceConstant < 0xFFF ){ ++forceConstant; }; break;
-    case DOWN: if( forceConstant > 0 ){ --forceConstant; } break;
+    case UP:
+      if( forceConstant < 0xFFF ) {
+        ++forceConstant;
+      }else{
+        forceConstant = 0;
+      };
+      break;
+    case DOWN:
+      isFixedBoundary = !isFixedBoundary;
+      break;
     case CENTER:
       influence = 0b1111;
       break;
@@ -56,7 +65,7 @@ void Wave0::wave(Sign &sign, uint8_t x, uint8_t y, int32_t deltaT2){
 
   int32_t u[4];
   uint8_t idx = 0;
-  uint16_t boundary = pixel->hue[0];
+  uint16_t boundary = isFixedBoundary ? (0xFFFF>1) : pixel->hue[0];
   if((influence & 0b0001) > 0){ u[idx++] = (x == 0 )           ? boundary : sign.pixel(x-1, y)->hue[1]; }
   if((influence & 0b0010) > 0){ u[idx++] = (x == LED_WIDTH-1)  ? boundary : sign.pixel(x+1, y)->hue[1]; }
   if((influence & 0b0100) > 0){ u[idx++] = (y == 0 )           ? boundary : sign.pixel(x, y-1)->hue[1]; }

@@ -10,6 +10,7 @@ class RandomOn : public Effect{
     RandomOn();
     void run(Sign &sign, EffectData &data);
     void randomize();
+    void push(IrInput input);
 
   private:
     uint8_t onCount;
