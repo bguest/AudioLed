@@ -31,6 +31,7 @@ void Effects::init(){
 }
 
 void Effects::reset(){
+  cConfig = 0;
   effect[0]  = &randomOn;
   cEffect[0] = RANDOM_ON;
   effect[1]  = &twoColor;
@@ -114,9 +115,17 @@ void Effects::printEffect(uint8_t kEffect){
 }
 #endif
 
+void Effects::setConfig(uint8_t kConfig){
+  switch(kConfig){
+    case FIRE0_CONFIG:
+      this->setEffect(SPECTRUM_0, TEXT_LAYER);
+      this->setEffect(TWO_COLOR, COLOR_LAYER);
+      break;
+  }
+}
+
 void Effects::nextEffect(uint8_t layer){
-  cEffect[layer]++;
-  cEffect[layer] = cEffect[layer] % EFFECT_COUNT;
+  cEffect[layer] = (++cEffect[layer]) % EFFECT_COUNT;
   this -> setEffect(cEffect[layer], layer);
 }
 
@@ -124,10 +133,23 @@ void Effects::prevEffect(uint8_t layer){
   if(cEffect[layer] == 0){
     cEffect[layer] = EFFECT_COUNT - 1;
   }else{
-    cEffect[layer]--;
-    cEffect[layer] = cEffect[layer] % EFFECT_COUNT;
+    cEffect[layer] = (--cEffect[layer]) % EFFECT_COUNT;
   }
   this -> setEffect(cEffect[layer], layer);
+}
+
+void Effects::nextConfig(){
+  cConfig = (++cConfig) % CONFIG_COUNT;
+  this -> setConfig(cConfig);
+}
+
+void Effects::prevConfig(){
+  if(cConfig == 0){
+    cConfig = CONFIG_COUNT - 1;
+  }else{
+    cConfig = (--cConfig ) % CONFIG_COUNT;
+  }
+  this -> setConfig(cConfig);
 }
 
 void Effects::updateStrip(){
@@ -139,11 +161,13 @@ void Effects::updateStrip(){
 }
 
 void Effects::updateStrip(EffectData &data){
-  if( data.pushLayer != LAYER_COUNT){
-    if(data.pushLayer == TEXT_LAYER){
+  if( data.pushLayer != CONFIG_LAYER){
+    if(data.pushLayer == ADJUST_LAYER){
       strip.setPixelColor(0, 0xFFFFFF);
-    }else if( data.pushLayer == COLOR_LAYER){
+    }else if( data.pushLayer == TEXT_LAYER){
       strip.setPixelColor(13, 0xFFFFFF);
+    }else if( data.pushLayer == COLOR_LAYER){
+      strip.setPixelColor(14, 0xFFFFFF);
     }
   }
 }

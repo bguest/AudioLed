@@ -32,7 +32,9 @@ const uint8_t UPDATE_DURRATION = 5;
 
 #define TEXT_LAYER 0
 #define COLOR_LAYER 1
-#define LAYER_COUNT 2
+#define ADJUST_LAYER 2
+#define CONFIG_LAYER 3
+#define LAYER_COUNT 4 
 
 typedef const enum _EFFECTS {
   RANDOM_ON = 0,
@@ -56,6 +58,10 @@ typedef const enum _EFFECTS {
   EFFECT_COUNT
 } EFFECTS;
 
+typedef const enum _CONFIGS{
+  FIRE0_CONFIG = 0,
+  CONFIG_COUNT
+} CONFIGURATIONS;
 
 class Effects{
   public:
@@ -66,6 +72,8 @@ class Effects{
     void reset();
     void nextEffect(uint8_t layer);
     void prevEffect(uint8_t layer);
+    void nextConfig();
+    void prevConfig();
 
   private:
     unsigned long lastRun;
@@ -75,11 +83,13 @@ class Effects{
     Sign sign;
 
     void setEffect(uint8_t kEffect, uint8_t layer);
+    void setConfig(uint8_t kConfig);
 #ifdef DEBUG
     void printEffect(uint8_t kEffect);
 #endif
-    uint8_t cEffect[LAYER_COUNT];
-    Effect* effect[LAYER_COUNT];
+    uint8_t cEffect[COLOR_LAYER+1];
+    Effect* effect[COLOR_LAYER+1];
+    uint8_t cConfig;
 
     Effect noEffect;
     RandomOn randomOn;

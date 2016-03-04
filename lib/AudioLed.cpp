@@ -1,7 +1,7 @@
 #include "AudioLed.h"
 
 AudioLed::AudioLed(){
-  pushLayer = LAYER_COUNT;
+  pushLayer = CONFIG_LAYER;
 }
 
 void AudioLed::init(){
@@ -36,19 +36,53 @@ void AudioLed::handleRemote(){
 
   switch(input){
     case PLAY_PAUSE:
-      pushLayer++;
-      pushLayer = pushLayer % (LAYER_COUNT + 1);
+      pushLayer = (++pushLayer) % (LAYER_COUNT);
       return;
     case MENUE:
-      pushLayer = LAYER_COUNT;
+      pushLayer = CONFIG_LAYER;
       return;
   }
 
-  if(pushLayer != LAYER_COUNT){
+  if(pushLayer == CONFIG_LAYER){
+    this->changeConfig(input);
+    return;
+  }
+
+  if(pushLayer == COLOR_LAYER || pushLayer == TEXT_LAYER){
     effects.push(input, pushLayer);
     return;
   }
 
+  if(pushLayer == ADJUST_LAYER){
+    this->changeLayer(input);
+  }
+
+}
+
+void AudioLed::changeConfig(IrInput input){
+  switch(input){
+    //case UP:
+      //effects.nextEffect(COLOR_LAYER);
+      //break;
+    //case DOWN:
+      //effects.prevEffect(COLOR_LAYER);
+      //break;
+    case LEFT:
+      effects.prevConfig();
+      break;
+    case RIGHT:
+      effects.nextConfig();
+      break;
+    case CENTER:
+      tempo.tap();
+      if(tempo.isDoubleTap){
+        this->reset();
+      }
+      break;
+  }
+}
+
+void AudioLed::changeLayer(IrInput input){
   switch(input){
     case UP:
       effects.nextEffect(COLOR_LAYER);

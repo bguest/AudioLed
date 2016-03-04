@@ -22,6 +22,9 @@ class AudioLed{
     uint8_t pushLayer;
     void handleRemote();
     void reset();
+
+    void changeLayer(IrInput input);
+    void changeConfig(IrInput input);
 };
 
 #endif
