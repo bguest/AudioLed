@@ -21,9 +21,9 @@ void TwoColor::push(IrInput input){
   Effect::push(input);
   int8_t idx = -1;
   switch(input){
-    case UP: idx = 1; break;
-    case LEFT: idx = 0; break;
-    case DOWN: idx = 2; break;
+    case UP:   idx = Up; break;
+    case LEFT: idx = Off; break;
+    case DOWN: idx = Down; break;
     case RIGHT:
                settingMask++;
                if(settingMask > 0b11){settingMask = 0;}
@@ -41,6 +41,21 @@ void TwoColor::push(IrInput input){
     hue[idx] += HUE_STEP;
   }
 
+  Serial.print("UP:");
+  Serial.print(hue[Up],HEX);
+  Serial.print("\nDown:");
+  Serial.print(hue[Down],HEX);
+  Serial.println(" ");
+
+}
+void TwoColor::setConfig(uint8_t kConfig){
+  switch(kConfig){
+    case FIRE0_CONFIG:
+      settingMask = IS_OFF_MASK;
+      hue[Up] = 0x0000;
+      hue[Down] = 0x0F00;
+      break;
+  }
 }
 
 void TwoColor::run(Sign &sign, EffectData &data){
@@ -54,13 +69,8 @@ void TwoColor::run(Sign &sign, EffectData &data){
 
   for(uint8_t i=0; i<LED_COUNT; i++){
 
-    uint8_t idx = -1;
     Pixel* pixel = sign.pixel(i);
-    switch(pixel->direction){
-      case Up: idx = 1; break;
-      case Off: idx = 0; break;
-      case Down: idx = 2; break;
-    }
+    uint8_t idx = pixel->direction;
 
     if( (settingMask & IS_OFF_MASK) > 0 && pixel->direction == Off ){
       pixel->value = 0;

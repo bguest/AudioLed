@@ -8,8 +8,9 @@
 class Effect{
   public:
     Effect();
-    virtual void push(IrInput input);
     virtual void run(Sign &sign, EffectData &data);
+    virtual void push(IrInput input);
+    virtual void setConfig(uint8_t kConfig);
     virtual void randomize();
 };
 #endif

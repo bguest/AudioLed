@@ -58,6 +58,22 @@ void Wave0::push(IrInput input){
   }
 
 }
+void Wave0::setConfig(uint8_t kConfig){
+  switch(kConfig){
+
+    case CENTER_WAVE_CONFIG:
+      influence = 0b1111;
+      isFixedBoundary = false;
+      velocityConstant = 0x100000;
+      break;
+
+    case BOTTOM_BUBBLES_CONFIG:
+      influence = 0b0111;
+      isFixedBoundary = false;
+      velocityConstant = 0xFFFFF;
+      break;
+  }
+}
 
 void Wave0::wave(Sign &sign, uint8_t x, uint8_t y, int32_t deltaT2){
 

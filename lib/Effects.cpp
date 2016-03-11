@@ -117,11 +117,30 @@ void Effects::printEffect(uint8_t kEffect){
 
 void Effects::setConfig(uint8_t kConfig){
   switch(kConfig){
+
     case FIRE0_CONFIG:
       this->setEffect(SPECTRUM_0, TEXT_LAYER);
       this->setEffect(TWO_COLOR, COLOR_LAYER);
       break;
+
+    case CENTER_WAVE_CONFIG:
+      this->setEffect(CENTER_PULSE, TEXT_LAYER);
+      this->setEffect(WAVE0, COLOR_LAYER);
+      break;
+
+    case BOTTOM_BUBBLES_CONFIG:
+      this->setEffect(SPECTRUM_LINE, TEXT_LAYER);
+      this->setEffect(WAVE0, COLOR_LAYER);
+      break;
+
+    case DIFFUSION_TIME_CONFIG:
+      this->setEffect(TIME_DOMAIN, TEXT_LAYER);
+      this->setEffect(DIFFUSION, COLOR_LAYER);
+      break;
+
   }
+  effect[TEXT_LAYER]->setConfig(kConfig);
+  effect[COLOR_LAYER]->setConfig(kConfig);
 }
 
 void Effects::nextEffect(uint8_t layer){
@@ -162,11 +181,11 @@ void Effects::updateStrip(){
 
 void Effects::updateStrip(EffectData &data){
   if( data.pushLayer != CONFIG_LAYER){
-    if(data.pushLayer == ADJUST_LAYER){
+    if(data.pushLayer == TEXT_LAYER){
       strip.setPixelColor(0, 0xFFFFFF);
-    }else if( data.pushLayer == TEXT_LAYER){
-      strip.setPixelColor(13, 0xFFFFFF);
     }else if( data.pushLayer == COLOR_LAYER){
+      strip.setPixelColor(13, 0xFFFFFF);
+    }else if( data.pushLayer == ADJUST_LAYER){
       strip.setPixelColor(14, 0xFFFFFF);
     }
   }

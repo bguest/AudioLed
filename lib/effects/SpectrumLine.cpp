@@ -19,8 +19,15 @@ void SpectrumLine::run(Sign &sign, EffectData &data){
     Pixel* pixel = sign.pixel(i, lineHeight);
     pixel->hue[0] = map(data.freqAmp[i],0,data.maxFreqAmp[i],0,0xFFFF);
   }
-
 }
+
+void SpectrumLine::setConfig(uint8_t kConfig){
+  switch(kConfig){
+    case BOTTOM_BUBBLES_CONFIG:
+      lineHeight = 0;
+  }
+}
+
 void SpectrumLine::push(IrInput input){
   Effect::push(input);
 

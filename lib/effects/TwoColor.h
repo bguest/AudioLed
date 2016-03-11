@@ -11,6 +11,7 @@ class TwoColor : public Effect{
     void run(Sign &sign, EffectData &data);
     void push(IrInput input);
     void randomize();
+    void setConfig(uint8_t kConfig);
 
   private:
     uint16_t hue[3];

@@ -9,6 +9,7 @@ class TimeDomain : public Effect {
     TimeDomain();
     void run(Sign &sign, EffectData &data);
     void push(IrInput input);
+    void setConfig(uint8_t kConfig);
 
   private:
     unsigned long lastStep;

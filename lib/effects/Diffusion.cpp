@@ -46,6 +46,14 @@ void Diffusion::push(IrInput input){
   }
 }
 
+void Diffusion::setConfig(uint8_t kConfig){
+  switch(kConfig){
+    case DIFFUSION_TIME_CONFIG:
+      influence = 0b1100;
+      diffusionConstant = 1000;
+  }
+}
+
 void Diffusion::diffuse(Sign &sign, uint8_t x, uint8_t y, int32_t deltaT){
 
   Pixel* pixel = sign.pixel(x,y);

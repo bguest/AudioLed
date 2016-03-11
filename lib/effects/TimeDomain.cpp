@@ -69,6 +69,13 @@ void TimeDomain::push(IrInput input){
   }
 }
 
+void TimeDomain::setConfig(uint8_t kConfig){
+  switch(kConfig){
+    case DIFFUSION_TIME_CONFIG:
+      band = FREQ_COUNT;
+  }
+}
+
 void TimeDomain::pushVolume(uint8_t vol){
   for(uint8_t i=LED_WIDTH-1; i > 0; i--){
     volume[i] = volume[i-1];

@@ -39,11 +39,16 @@ void Spectrum0::run(Sign &sign, EffectData &data){
       if(isHighOn && maxAmp[i] < (j+1)*dotSize && maxAmp[i] > j*dotSize ){
         pixel -> direction = Down;
       }
-    } 
+    }
   }
-
 }
-void push(IrInput input){
+
+void Spectrum0::setConfig(uint8_t kConfig){
+  switch(kConfig){
+    case FIRE0_CONFIG:
+      rolloff = 95;
+      isHighOn = true;
+  }
 }
 
 void Spectrum0::push(IrInput input){

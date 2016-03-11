@@ -34,7 +34,7 @@ const uint8_t UPDATE_DURRATION = 5;
 #define COLOR_LAYER 1
 #define ADJUST_LAYER 2
 #define CONFIG_LAYER 3
-#define LAYER_COUNT 4 
+#define LAYER_COUNT 4
 
 typedef const enum _EFFECTS {
   RANDOM_ON = 0,
@@ -60,6 +60,9 @@ typedef const enum _EFFECTS {
 
 typedef const enum _CONFIGS{
   FIRE0_CONFIG = 0,
+  CENTER_WAVE_CONFIG,
+  BOTTOM_BUBBLES_CONFIG,
+  DIFFUSION_TIME_CONFIG,
   CONFIG_COUNT
 } CONFIGURATIONS;
 

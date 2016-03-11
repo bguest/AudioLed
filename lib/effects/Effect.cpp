@@ -12,6 +12,9 @@ void Effect::push(IrInput input){
   }
 }
 
+void Effect::setConfig(uint8_t kConfig){
+}
+
 void Effect::randomize(){
 }
 
