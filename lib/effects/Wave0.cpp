@@ -64,13 +64,13 @@ void Wave0::setConfig(uint8_t kConfig){
     case CENTER_WAVE_CONFIG:
       influence = 0b1111;
       isFixedBoundary = false;
-      velocityConstant = 0x100000;
+      velocityConstant = 0x10000;
       break;
 
     case BOTTOM_BUBBLES_CONFIG:
       influence = 0b0111;
       isFixedBoundary = false;
-      velocityConstant = 0xFFFFF;
+      velocityConstant = 0x10000;
       break;
   }
 }

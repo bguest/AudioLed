@@ -4,8 +4,8 @@ void Sign::init(){
   for(uint8_t i = 0; i< LED_WIDTH; i++){
     for(uint8_t j = 0; j<LED_HEIGHT; j++){
       Pixel* pixel = &pixels[LED_HEIGHT*i+j];
-      pixel->x = i;
-      pixel->y = j;
+      //pixel->x = i;
+      //pixel->y = j;
     }
   }
 

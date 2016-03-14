@@ -41,19 +41,13 @@ void TwoColor::push(IrInput input){
     hue[idx] += HUE_STEP;
   }
 
-  Serial.print("UP:");
-  Serial.print(hue[Up],HEX);
-  Serial.print("\nDown:");
-  Serial.print(hue[Down],HEX);
-  Serial.println(" ");
-
 }
 void TwoColor::setConfig(uint8_t kConfig){
   switch(kConfig){
     case FIRE0_CONFIG:
       settingMask = IS_OFF_MASK;
-      hue[Up] = 0x0000;
-      hue[Down] = 0x0F00;
+      hue[Up] = 0x0F00;
+      hue[Down] = 0x0100;
       break;
   }
 }

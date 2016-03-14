@@ -25,6 +25,7 @@
 #endif
 #include "effects/CenterPulse.h"
 #include "effects/TimeDomain.h"
+#include "effects/ParticleSystem.h"
 
 #include "Adafruit_WS2801.h"
 
@@ -55,11 +56,14 @@ typedef const enum _EFFECTS {
   TWO_COLOR,
   DIFFUSION,
   WAVE0,
+  PARTICLE_SYSTEM,
   EFFECT_COUNT
 } EFFECTS;
 
 typedef const enum _CONFIGS{
   FIRE0_CONFIG = 0,
+  PS_CENTER_FOUNTAIN,
+  PS_FIRE0_CONFIG,
   CENTER_WAVE_CONFIG,
   BOTTOM_BUBBLES_CONFIG,
   DIFFUSION_TIME_CONFIG,
@@ -111,6 +115,7 @@ class Effects{
     Wander wander;
   #endif
     Wave0 wave0;
+    ParticleSystem particleSystem;
 
     Adafruit_WS2801 strip;
 

@@ -17,6 +17,7 @@
 #endif
 #include "effects/CenterPulse.cpp"
 #include "effects/TimeDomain.cpp"
+#include "effects/ParticleSystem.cpp"
 
 Effects::Effects(){
   this->reset();
@@ -86,6 +87,7 @@ void Effects::setEffect(uint8_t kEffect, uint8_t layer){
 #endif
     case CENTER_PULSE: effect[layer] = &centerPulse; break;
     case TIME_DOMAIN: effect[layer] = &timeDomain; break;
+    case PARTICLE_SYSTEM: effect[layer] = &particleSystem; break;
   }
 #ifdef DEBUG
   this->printEffect(kEffect);
@@ -111,6 +113,7 @@ void Effects::printEffect(uint8_t kEffect){
 #endif
     case CENTER_PULSE: Serial.println("CenterPulse"); break;
     case TIME_DOMAIN: Serial.println("TimeDomain"); break;
+    case PARTICLE_SYSTEM: Serial.println("ParticleSystem"); break;
   }
 }
 #endif
@@ -121,6 +124,12 @@ void Effects::setConfig(uint8_t kConfig){
     case FIRE0_CONFIG:
       this->setEffect(SPECTRUM_0, TEXT_LAYER);
       this->setEffect(TWO_COLOR, COLOR_LAYER);
+      break;
+
+    case PS_CENTER_FOUNTAIN:
+    case PS_FIRE0_CONFIG:
+      this->setEffect(NO_EFFECT, TEXT_LAYER);
+      this->setEffect(PARTICLE_SYSTEM, COLOR_LAYER);
       break;
 
     case CENTER_WAVE_CONFIG:

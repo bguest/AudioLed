@@ -1,7 +1,7 @@
 #include "Pixel.h"
 
 Pixel::Pixel(){
-  saturation = 0xFFFF;
+  //saturation = 0xFFFF;
   value = 0xFFFF;
 }
 
@@ -15,6 +15,11 @@ void Pixel::push(){
   hue[1] = hue[0];
 }
 
+void Pixel::addValue(uint32_t newValue){
+  newValue += value;
+  value = min(UINT16_MAX, newValue);
+}
+
 uint32_t Pixel::color()
 {
     unsigned char region, fpart, p, q, t, r, g, b;
@@ -25,7 +30,7 @@ uint32_t Pixel::color()
              v = value >> 8;
 #else
     uint16_t h = hue[0] >> 8,
-             s = saturation >> 8,
+             s = 0xFF, //saturation >> 8,
              v = value >> 8;
 #endif
 
