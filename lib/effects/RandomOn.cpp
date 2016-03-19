@@ -18,8 +18,8 @@ void RandomOn::run(Sign &sign, EffectData &data){
   }
   for(uint8_t i = 0; i < onCount; i++){
     Pixel* pixel = sign.randomPixel();
-    pixel->direction = Up;
-    sign.randomPixel()->direction = Down;
+    pixel->direction[0] = Up;
+    sign.randomPixel()->direction[0] = Down;
   }
 }
 

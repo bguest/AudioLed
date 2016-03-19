@@ -3,21 +3,24 @@
 #include "effects/Effect.cpp"
 #include "effects/Diffusion.cpp"
 #include "effects/RandomOn.cpp"
-#ifdef USE_SINGLE_FADE
+#if USE_SINGLE_FADE
   #include "effects/SingleFade.cpp"
 #endif
 #include "effects/TwoColor.cpp"
 #include "effects/Spectrum0.cpp"
-#ifdef USE_WANDER
+#if USE_WANDER
   #include "effects/Wander.cpp"
 #endif
 #include "effects/Wave0.cpp"
-#ifdef USE_LINE_SPECTRUM
+#if USE_LINE_SPECTRUM
   #include "effects/SpectrumLine.cpp"
 #endif
 #include "effects/CenterPulse.cpp"
 #include "effects/TimeDomain.cpp"
-#include "effects/ParticleSystem.cpp"
+#if USE_PARTICLE_SYSTEM
+  #include "effects/ParticleSystem.cpp"
+#endif
+#include "effects/NeumannAutomata.cpp"
 
 Effects::Effects(){
   this->reset();
@@ -72,48 +75,54 @@ void Effects::setEffect(uint8_t kEffect, uint8_t layer){
   switch(kEffect){
     case NO_EFFECT: effect[layer] = &noEffect; break;
     case RANDOM_ON: effect[layer] = &randomOn; break;
-#ifdef USE_SINGLE_FADE
+  #if USE_SINGLE_FADE
     case SINGLE_FADE: effect[layer] = &singleFade; break;
-#endif
+  #endif
     case TWO_COLOR: effect[layer] = &twoColor; break;
     case WAVE0: effect[layer] = &wave0; break;
     case DIFFUSION: effect[layer] = &diffusion; break;
     case SPECTRUM_0: effect[layer] = &spectrum0; break;
-#ifdef USE_WANDER
+  #if USE_WANDER
     case WANDER: effect[layer] = &wander; break;
-#endif
-#ifdef USE_LINE_SPECTRUM
+  #endif
+  #if USE_LINE_SPECTRUM
     case SPECTRUM_LINE: effect[layer] = &spectrumLine; break;
-#endif
+  #endif
     case CENTER_PULSE: effect[layer] = &centerPulse; break;
     case TIME_DOMAIN: effect[layer] = &timeDomain; break;
+  #if USE_PARTICLE_SYSTEM
     case PARTICLE_SYSTEM: effect[layer] = &particleSystem; break;
+  #endif
+    case NEUMANN_AUTOMATA: effect[layer] = &neumannAutomata; break;
   }
-#ifdef DEBUG
-  this->printEffect(kEffect);
-#endif
+  #ifdef DEBUG
+    this->printEffect(kEffect);
+  #endif
 }
 
 #ifdef DEBUG
 void Effects::printEffect(uint8_t kEffect){
   switch(kEffect){
     case RANDOM_ON: Serial.println("Random ON"); break;
-#ifdef USE_SINGLE_FADE
+  #if USE_SINGLE_FADE
     case SINGLE_FADE: Serial.println("Single Fade"); break;
-#endif
+  #endif
     case TWO_COLOR: Serial.println("Two Color"); break;
     case WAVE0: Serial.println("Wave0"); break;
     case DIFFUSION: Serial.println("Diffusion"); break;
     case SPECTRUM_0: Serial.println("Spectrum0"); break;
-#ifdef USE_WANDER
+  #if USE_WANDER
     case WANDER: Serial.println("Wander"); break;
-#endif
-#ifdef USE_LINE_SPECTRUM
+  #endif
+  #if USE_LINE_SPECTRUM
     case SPECTRUM_LINE: Serial.println("SpectrumLine");  break;
-#endif
+  #endif
     case CENTER_PULSE: Serial.println("CenterPulse"); break;
     case TIME_DOMAIN: Serial.println("TimeDomain"); break;
+  #if USE_PARTICLE_SYSTEM
     case PARTICLE_SYSTEM: Serial.println("ParticleSystem"); break;
+  #endif
+    case NEUMANN_AUTOMATA: Serial.println("NeumannAutomata"); break;
   }
 }
 #endif
@@ -126,11 +135,18 @@ void Effects::setConfig(uint8_t kConfig){
       this->setEffect(TWO_COLOR, COLOR_LAYER);
       break;
 
+    case NEUMANN_0_CONFIG:
+      this->setEffect(NEUMANN_AUTOMATA, TEXT_LAYER);
+      this->setEffect(TWO_COLOR, COLOR_LAYER);
+      break;
+
+  #if USE_PARTICLE_SYSTEM
     case PS_CENTER_FOUNTAIN:
     case PS_FIRE0_CONFIG:
       this->setEffect(NO_EFFECT, TEXT_LAYER);
       this->setEffect(PARTICLE_SYSTEM, COLOR_LAYER);
       break;
+  #endif
 
     case CENTER_WAVE_CONFIG:
       this->setEffect(CENTER_PULSE, TEXT_LAYER);

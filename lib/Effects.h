@@ -4,28 +4,32 @@
 #define DATA_PIN 11
 #define CLK_PIN 13
 
-#define USE_LINE_SPECTRUM
-//#define USE_SINGLE_FADE
-//#define USE_WANDER
+#define USE_LINE_SPECTRUM     1
+#define USE_SINGLE_FADE       0
+#define USE_WANDER            0
+#define USE_PARTICLE_SYSTEM   0
 
 #include "effects/Effect.h"
 #include "effects/Diffusion.h"
 #include "effects/RandomOn.h"
 #include "effects/TwoColor.h"
-#ifdef USE_SINGLE_FADE
+#if USE_SINGLE_FADE
   #include "effects/SingleFade.h"
 #endif
 #include "effects/Spectrum0.h"
-#ifdef USE_WANDER
+#if USE_WANDER
   #include "effects/Wander.h"
 #endif
 #include "effects/Wave0.h"
-#ifdef USE_LINE_SPECTRUM
+#if USE_LINE_SPECTRUM
   #include "effects/SpectrumLine.h"
 #endif
 #include "effects/CenterPulse.h"
 #include "effects/TimeDomain.h"
-#include "effects/ParticleSystem.h"
+#if USE_PARTICLE_SYSTEM
+  #include "effects/ParticleSystem.h"
+#endif
+#include "effects/NeumannAutomata.h"
 
 #include "Adafruit_WS2801.h"
 
@@ -39,31 +43,37 @@ const uint8_t UPDATE_DURRATION = 5;
 
 typedef const enum _EFFECTS {
   RANDOM_ON = 0,
-#ifdef USE_WANDER
+#if USE_WANDER
   WANDER,
 #endif
   SPECTRUM_0,
   TIME_DOMAIN,
-#ifdef USE_LINE_SPECTRUM
+#if USE_LINE_SPECTRUM
   SPECTRUM_LINE,
 #endif
   CENTER_PULSE,
+  NEUMANN_AUTOMATA,
   NO_EFFECT,
 
-#ifdef USE_SINGLE_FADE
+#if USE_SINGLE_FADE
   SINGLE_FADE,
 #endif
   TWO_COLOR,
   DIFFUSION,
   WAVE0,
+#if USE_PARTICLE_SYSTEM
   PARTICLE_SYSTEM,
+#endif
   EFFECT_COUNT
 } EFFECTS;
 
 typedef const enum _CONFIGS{
   FIRE0_CONFIG = 0,
+  NEUMANN_0_CONFIG,
+#if USE_PARTICLE_SYSTEM
   PS_CENTER_FOUNTAIN,
   PS_FIRE0_CONFIG,
+#endif
   CENTER_WAVE_CONFIG,
   BOTTOM_BUBBLES_CONFIG,
   DIFFUSION_TIME_CONFIG,
@@ -91,31 +101,34 @@ class Effects{
 
     void setEffect(uint8_t kEffect, uint8_t layer);
     void setConfig(uint8_t kConfig);
-#ifdef DEBUG
+  #ifdef DEBUG
     void printEffect(uint8_t kEffect);
-#endif
+  #endif
     uint8_t cEffect[COLOR_LAYER+1];
     Effect* effect[COLOR_LAYER+1];
     uint8_t cConfig;
 
     Effect noEffect;
     RandomOn randomOn;
-  #ifdef USE_SINGLE_FADE
+  #if USE_SINGLE_FADE
     SingleFade singleFade;
   #endif
     TwoColor twoColor;
     Diffusion diffusion;
     Spectrum0 spectrum0;
     TimeDomain timeDomain;
-  #ifdef USE_LINE_SPECTRUM
+  #if USE_LINE_SPECTRUM
     SpectrumLine spectrumLine;
   #endif
     CenterPulse centerPulse;
-  #ifdef USE_WANDER
+  #if USE_WANDER
     Wander wander;
   #endif
     Wave0 wave0;
+  #if USE_PARTICLE_SYSTEM
     ParticleSystem particleSystem;
+  #endif
+    NeumannAutomata neumannAutomata;
 
     Adafruit_WS2801 strip;
 

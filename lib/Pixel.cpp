@@ -11,6 +11,7 @@ uint32_t Color(uint8_t r, uint8_t g, uint8_t b) {
   return ((uint32_t)r << 16) | ((uint32_t)g <<  8) | b;
 }
 void Pixel::push(){
+  direction[1] = direction[0];
   hue[2] = hue[1];
   hue[1] = hue[0];
 }

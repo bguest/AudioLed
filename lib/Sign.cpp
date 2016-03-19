@@ -14,7 +14,7 @@ void Sign::init(){
 void Sign::off(){
   for(uint8_t i = 0; i<LED_COUNT; i++){
     Pixel *pixel = &pixels[i];
-    pixel->direction = Off;
+    pixel->direction[0] = Off;
   }
 }
 

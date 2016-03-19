@@ -34,10 +34,10 @@ void Spectrum0::run(Sign &sign, EffectData &data){
       Pixel* pixel = sign.pixel(i,j);
 
       if((j+1)*dotSize < data.freqAmp[i]){
-        pixel -> direction = Up;
+        pixel -> direction[0] = Up;
       }
       if(isHighOn && maxAmp[i] < (j+1)*dotSize && maxAmp[i] > j*dotSize ){
-        pixel -> direction = Down;
+        pixel -> direction[0] = Down;
       }
     }
   }

@@ -49,6 +49,15 @@ void TwoColor::setConfig(uint8_t kConfig){
       hue[Up] = 0x0F00;
       hue[Down] = 0x0100;
       break;
+
+    case NEUMANN_0_CONFIG:
+      settingMask = IS_FADE_MASK;
+      hue[Up] = 0xA500;
+      hue[Down] = 0x3000;
+      fadeSpeed[Up] = 30;
+      fadeSpeed[Off] = 50;
+      fadeSpeed[Down] = -20;
+      break;
   }
 }
 
@@ -64,9 +73,9 @@ void TwoColor::run(Sign &sign, EffectData &data){
   for(uint8_t i=0; i<LED_COUNT; i++){
 
     Pixel* pixel = sign.pixel(i);
-    uint8_t idx = pixel->direction;
+    uint8_t idx = pixel->direction[0];
 
-    if( (settingMask & IS_OFF_MASK) > 0 && pixel->direction == Off ){
+    if( (settingMask & IS_OFF_MASK) > 0 && pixel->direction[0] == Off ){
       pixel->value = 0;
     }else{
       pixel->hue[0] = hue[idx];

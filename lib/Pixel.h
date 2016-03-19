@@ -12,7 +12,7 @@ typedef enum _Direction{
 class Pixel{
   public:
     Pixel();
-    Direction direction;
+    Direction direction[2];
     uint16_t hue[3];
     //uint16_t saturation;
     uint16_t value;

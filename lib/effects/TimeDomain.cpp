@@ -41,7 +41,7 @@ void TimeDomain::run(Sign &sign, EffectData &data){
       if( pixelHeight > ( UINT8_MAX_2 - vol ) &&
           pixelHeight < ( UINT8_MAX_2 + vol ) ){
 
-        sign.pixel(i,j)->direction = Up;
+        sign.pixel(i,j)->direction[0] = Up;
       }
 
     }
