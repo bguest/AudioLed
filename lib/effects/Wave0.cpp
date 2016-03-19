@@ -96,7 +96,9 @@ void Wave0::wave(Sign &sign, uint8_t x, uint8_t y, int32_t deltaT2){
   for(uint8_t i=0; i<idx; i++){
     h += u[i] - h0;
   }
-  int32_t f = pixel->direction == Up ? forceConstant : 0;
+  int32_t f = 0;
+  if( pixel->direction == Up ){ f = forceConstant }
+  else if( pixel-> direction == Down){ f = -forceConstant }
   h = 2*h0 - h1 + h*deltaT2/c + f;
 
   if(h < 0){ h = 0; }
