@@ -50,23 +50,33 @@ void TwoColor::setConfig(uint8_t kConfig){
       hue[Down] = 0x0100;
       break;
 
+    case THREE_COLOR_RANDOM_0_CONFIG:
+      settingMask = IS_FADE_MASK;
+      hue[Up] = 0x0000;
+      hue[Down] = 0x0000;
+      hue[Off] = 0x0000;
+      fadeSpeed[Up] = -80;
+      fadeSpeed[Down] = 60;
+      fadeSpeed[Off] = 10;
+      break;
+
     case NEUMANN_0_CONFIG:
       settingMask = IS_FADE_MASK;
       hue[Up] = 0xA500;
       hue[Down] = 0x3000;
       fadeSpeed[Up] = 30;
-      fadeSpeed[Off] = 50;
-      fadeSpeed[Down] = -20;
+      fadeSpeed[Off] = 60;
+      fadeSpeed[Down] = -50;
       break;
   }
 }
 
 void TwoColor::run(Sign &sign, EffectData &data){
-  if(!data.shouldStep){ return; }
+  if( (settingMask & IS_FADE_MASK) == 0 || !data.shouldStep){ return; }
 
   if( (settingMask & IS_FADE_MASK) > 0){
     for(uint8_t idx = 0; idx < 3; idx++){
-      hue[idx]+=fadeSpeed[idx];
+      hue[idx] += fadeSpeed[idx];
     }
   }
 

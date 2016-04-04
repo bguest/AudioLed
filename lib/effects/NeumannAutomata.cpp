@@ -42,7 +42,7 @@ uint8_t NeumannAutomata::neighborhoodState(Sign &sign, uint8_t x, uint8_t y){
   return state;
 }
 
-#define RULE_COUNT 0
+#define RULE_COUNT 4
 
 void NeumannAutomata::setPixel(Pixel *pixel, uint8_t state){
 
@@ -56,16 +56,27 @@ void NeumannAutomata::setPixel(Pixel *pixel, uint8_t state){
            //0---------1---------2---------3--
            //012345678901234567890123456789012
     rule = 0b11111111111111111111111111111111;
+    break;
 
     case 1:  //Fredkin2
            //0---------1---------2---------3--
            //012345678901234567890123456789012
     rule = 0b01101001100101101001011001101001;
-    case 2:
-    default: //Crystal2
+    break;
+
+    case 2: //Crystal2
            //0---------1---------2---------3--
            //012345678901234567890123456789012
     rule = 0b01101101101101101111101011001000;
+    break;
+
+    case 3:
+    default:
+           //0---------1---------2---------3--
+           //012345678901234567890123456789012
+    rule = 0b00000000000000000000000000000000;
+    break;
+
 
   }
 

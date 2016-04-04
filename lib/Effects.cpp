@@ -135,6 +135,16 @@ void Effects::setConfig(uint8_t kConfig){
       this->setEffect(TWO_COLOR, COLOR_LAYER);
       break;
 
+    case RANDOM_DIFFUSION_0_CONFIG:
+      this->setEffect(RANDOM_ON, TEXT_LAYER);
+      this->setEffect(DIFFUSION, COLOR_LAYER);
+      break;
+
+    case THREE_COLOR_RANDOM_0_CONFIG:
+      this->setEffect(RANDOM_ON, TEXT_LAYER);
+      this->setEffect(TWO_COLOR, COLOR_LAYER);
+      break;
+
     case NEUMANN_0_CONFIG:
       this->setEffect(NEUMANN_AUTOMATA, TEXT_LAYER);
       this->setEffect(TWO_COLOR, COLOR_LAYER);

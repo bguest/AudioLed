@@ -13,6 +13,7 @@ class Diffusion: public Effect{
     void setConfig(uint8_t kConfig);
 
   private:
+    bool isFixedBoundary;
     uint16_t diffusionConstant;
     unsigned long lastStep;
     void diffuse(Sign &sign, uint8_t x, uint8_t y, int32_t deltaT);

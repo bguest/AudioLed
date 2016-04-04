@@ -17,8 +17,7 @@ void RandomOn::run(Sign &sign, EffectData &data){
     sign.off();
   }
   for(uint8_t i = 0; i < onCount; i++){
-    Pixel* pixel = sign.randomPixel();
-    pixel->direction[0] = Up;
+    sign.randomPixel()->direction[0] = Up;
     sign.randomPixel()->direction[0] = Down;
   }
 }
@@ -28,5 +27,26 @@ void RandomOn::push(IrInput input){
   switch(input){
     case DOWN: if(onCount > 0 ){ onCount--; } break;
     case UP: if(onCount < LED_COUNT*2){ onCount++; } break;
+  }
+}
+
+void RandomOn::setConfig(uint8_t kConfig){
+  switch(kConfig){
+
+    case THREE_COLOR_RANDOM_0_CONFIG:
+      onCount = random(1, 20);
+      shouldReset = true;
+      turnOn = true;
+      break;
+
+    case RANDOM_DIFFUSION_0_CONFIG:
+      onCount = random(3,10);
+      shouldReset = true;
+      turnOn = true;
+      break;
+
+    default:
+      break;
+
   }
 }

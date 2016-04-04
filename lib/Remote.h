@@ -5,13 +5,21 @@
 #include "IRremote.h"
 
 #define IR_PIN A3
-#define PLAY_PAUSE_IR 0x31F0E936
-#define MENUE_IR      0xD14F58B0
-#define UP_IR         0x17E1F858
-#define DOWN_IR       0x8EBB3CFC
-#define LEFT_IR       0xC26B4710
-#define RIGHT_IR      0xFA0E2992
-#define CENTER_IR     0x133620BA
+
+#define PLAY_PAUSE_IR_0 0x31F0E936
+#define PLAY_PAUSE_IR_1 0xFFF18C59
+#define MENUE_IR_0      0xD14F58B0
+#define MENUE_IR_1      0x5F00BA93
+#define UP_IR_0         0x17E1F858
+#define UP_IR_1         0xA5935A3B
+#define DOWN_IR_0       0x8EBB3CFC
+#define DOWN_IR_1       0x1C6C9EDF
+#define LEFT_IR_0       0xC26B4710
+#define LEFT_IR_1       0x501CA8F3
+#define RIGHT_IR_0      0xFA0E2992
+#define RIGHT_IR_1      0xC80ECCB5
+#define CENTER_IR_0     0x133620BA
+#define CENTER_IR_1     0xE136C3DD
 
 typedef enum _irInput{
   UP = 0, RIGHT, DOWN, LEFT, CENTER, PLAY_PAUSE, MENUE, NONE

@@ -11,6 +11,7 @@ class RandomOn : public Effect{
     void run(Sign &sign, EffectData &data);
     void randomize();
     void push(IrInput input);
+    void setConfig(uint8_t kConfig);
 
   private:
     uint8_t onCount;
