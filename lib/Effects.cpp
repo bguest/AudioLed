@@ -21,6 +21,7 @@
   #include "effects/ParticleSystem.cpp"
 #endif
 #include "effects/NeumannAutomata.cpp"
+#include "effects/Strobe.cpp"
 
 Effects::Effects(){
   this->reset();
@@ -38,8 +39,8 @@ void Effects::reset(){
   cConfig = 0;
   effect[0]  = &randomOn;
   cEffect[0] = RANDOM_ON;
-  effect[1]  = &twoColor;
-  cEffect[1] = TWO_COLOR;
+  effect[1]  = &diffusion;
+  cEffect[1] = DIFFUSION;
 }
 
 void Effects::run(EffectData &data){
@@ -78,6 +79,7 @@ void Effects::setEffect(uint8_t kEffect, uint8_t layer){
   #if USE_SINGLE_FADE
     case SINGLE_FADE: effect[layer] = &singleFade; break;
   #endif
+    case STROBE: effect[layer] = &strobe; break;
     case TWO_COLOR: effect[layer] = &twoColor; break;
     case WAVE0: effect[layer] = &wave0; break;
     case DIFFUSION: effect[layer] = &diffusion; break;
@@ -103,11 +105,12 @@ void Effects::setEffect(uint8_t kEffect, uint8_t layer){
 #ifdef DEBUG
 void Effects::printEffect(uint8_t kEffect){
   switch(kEffect){
-    case RANDOM_ON: Serial.println("Random ON"); break;
+    case RANDOM_ON: Serial.println("Random On"); break;
   #if USE_SINGLE_FADE
     case SINGLE_FADE: Serial.println("Single Fade"); break;
   #endif
     case TWO_COLOR: Serial.println("Two Color"); break;
+    case STROBE: Serial.println("Strobe"); break;
     case WAVE0: Serial.println("Wave0"); break;
     case DIFFUSION: Serial.println("Diffusion"); break;
     case SPECTRUM_0: Serial.println("Spectrum0"); break;
@@ -132,6 +135,11 @@ void Effects::setConfig(uint8_t kConfig){
 
     case FIRE0_CONFIG:
       this->setEffect(SPECTRUM_0, TEXT_LAYER);
+      this->setEffect(TWO_COLOR, COLOR_LAYER);
+      break;
+
+    case STROBE_0_CONFIG:
+      this->setEffect(STROBE, TEXT_LAYER);
       this->setEffect(TWO_COLOR, COLOR_LAYER);
       break;
 

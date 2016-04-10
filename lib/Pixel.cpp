@@ -1,8 +1,8 @@
 #include "Pixel.h"
 
 Pixel::Pixel(){
-  //saturation = 0xFFFF;
-  value = 0xFFFF;
+  saturation = 0xFF;
+  value = 0xFF;
 }
 
 // Input a value 0 to 255 to get a color value.
@@ -31,8 +31,8 @@ uint32_t Pixel::color()
              v = value >> 8;
 #else
     uint16_t h = hue[0] >> 8,
-             s = 0xFF, //saturation >> 8,
-             v = value >> 8;
+             s = saturation,
+             v = value;
 #endif
 
     if(s == 0) {

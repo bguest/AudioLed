@@ -15,6 +15,8 @@ class TwoColor : public Effect{
 
   private:
     uint16_t hue[3];
+    uint8_t saturation[3];
+    uint8_t value[3];
     int8_t fadeSpeed[3];
     uint8_t settingMask;
 };

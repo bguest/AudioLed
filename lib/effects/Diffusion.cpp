@@ -31,7 +31,7 @@ void Diffusion::run(Sign &sign, EffectData &data){
       }else{
         this->diffuse(sign, i, j, deltaT);
       }
-      pixel->value = 0xFFFF;
+      pixel->value = 0xFF;
     }
   }
 }
@@ -65,7 +65,7 @@ void Diffusion::setConfig(uint8_t kConfig){
     case RANDOM_DIFFUSION_0_CONFIG:
       isFixedBoundary = false;
       influence = 0b1111;
-      diffusionConstant = 1000;
+      diffusionConstant = 2000;
       break;
   }
 }

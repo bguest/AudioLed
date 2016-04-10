@@ -104,6 +104,6 @@ void Wave0::wave(Sign &sign, uint8_t x, uint8_t y, int32_t deltaT2){
   if(h < 0){ h = 0; }
   else if(h > 0xFFFF){ h = 0xFFFF; }
   pixel->hue[0] = h;
-  pixel->value = 0xFFFF;
+  pixel->value = 0xFF;
 }
 

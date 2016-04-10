@@ -1,8 +1,7 @@
 #include "TwoColor.h"
 #define HUE_STEP 0x0100
 #define FADE_STEP 1
-#define FADE_MAX 30
-#define IS_OFF_MASK 0b10
+#define FADE_MAX 80
 #define IS_FADE_MASK 0b01
 
 TwoColor::TwoColor(){
@@ -12,6 +11,8 @@ TwoColor::TwoColor(){
 void TwoColor::randomize(){
   settingMask = random(0,0b11);
   for(uint8_t i=0; i<3; i++){
+    value[i] = 0xFF;
+    saturation[i] = 0xFF;
     hue[i] = random(0xFF);
     fadeSpeed[i] = random(-FADE_MAX, FADE_MAX);
   }
@@ -43,9 +44,26 @@ void TwoColor::push(IrInput input){
 
 }
 void TwoColor::setConfig(uint8_t kConfig){
+
+  // Defaults
+  for(uint8_t i=0; i<3; i++){
+    value[i] = 0xFF;
+    saturation[i] = 0xFF;
+    hue[i] = 0x0100;
+    fadeSpeed[i] = 0;
+  }
+  settingMask = 0;
+
   switch(kConfig){
+    case STROBE_0_CONFIG:
+      for(uint8_t i=0; i<3; i++){ saturation[i] = 0; }
+      value[Up] = 0xFF;
+      value[Off] = 0x0;
+      value[Down] = 0x0;
+      break;
+
     case FIRE0_CONFIG:
-      settingMask = IS_OFF_MASK;
+      value[Off] = 0x0;
       hue[Up] = 0x0F00;
       hue[Down] = 0x0100;
       break;
@@ -72,7 +90,7 @@ void TwoColor::setConfig(uint8_t kConfig){
 }
 
 void TwoColor::run(Sign &sign, EffectData &data){
-  if( (settingMask & IS_FADE_MASK) == 0 || !data.shouldStep){ return; }
+  if( !data.shouldStep && (settingMask & IS_FADE_MASK) == 0  ){ return; }
 
   if( (settingMask & IS_FADE_MASK) > 0){
     for(uint8_t idx = 0; idx < 3; idx++){
@@ -85,12 +103,9 @@ void TwoColor::run(Sign &sign, EffectData &data){
     Pixel* pixel = sign.pixel(i);
     uint8_t idx = pixel->direction[0];
 
-    if( (settingMask & IS_OFF_MASK) > 0 && pixel->direction[0] == Off ){
-      pixel->value = 0;
-    }else{
-      pixel->hue[0] = hue[idx];
-      pixel->value = 0xFFFF;
-    }
+    pixel->hue[0] = hue[idx];
+    pixel->value = value[idx];
+    pixel->saturation = saturation[idx];
 
   }
 

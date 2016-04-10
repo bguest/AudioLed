@@ -14,8 +14,8 @@ class Pixel{
     Pixel();
     Direction direction[2];
     uint16_t hue[3];
-    //uint16_t saturation;
-    uint16_t value;
+    uint8_t saturation;
+    uint8_t value;
     //uint8_t x;
     //uint8_t y;
     uint32_t color();
