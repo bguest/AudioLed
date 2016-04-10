@@ -14,10 +14,10 @@ class TwoColor : public Effect{
     void setConfig(uint8_t kConfig);
 
   private:
+    uint8_t pushDirection;
     uint16_t hue[3];
     uint8_t saturation[3];
     uint8_t value[3];
     int8_t fadeSpeed[3];
-    uint8_t settingMask;
 };
 #endif

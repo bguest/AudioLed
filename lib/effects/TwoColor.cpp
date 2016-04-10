@@ -1,15 +1,15 @@
 #include "TwoColor.h"
 #define HUE_STEP 0x0100
-#define FADE_STEP 1
-#define FADE_MAX 80
-#define IS_FADE_MASK 0b01
+#define STEP_SIZE 4
+#define FADE_STEP 2
+#define FADE_MAX 100
 
 TwoColor::TwoColor(){
   this -> randomize();
 }
 
 void TwoColor::randomize(){
-  settingMask = random(0,0b11);
+
   for(uint8_t i=0; i<3; i++){
     value[i] = 0xFF;
     saturation[i] = 0xFF;
@@ -19,28 +19,18 @@ void TwoColor::randomize(){
 }
 
 void TwoColor::push(IrInput input){
-  Effect::push(input);
-  int8_t idx = -1;
   switch(input){
-    case UP:   idx = Up; break;
-    case LEFT: idx = Off; break;
-    case DOWN: idx = Down; break;
+    case CENTER: pushDirection = (++pushDirection % 3); break;
+    case UP:   value[pushDirection] += STEP_SIZE; break;
+    case LEFT: hue[pushDirection] += HUE_STEP; break;
+    case DOWN: saturation[pushDirection] += STEP_SIZE; break;
     case RIGHT:
-               settingMask++;
-               if(settingMask > 0b11){settingMask = 0;}
-               break;
+               if(++fadeSpeed[pushDirection] > FADE_MAX){
+                 fadeSpeed[pushDirection] = 0;
+               }
+               break; 
   }
 
-  if(idx < 0 ){return;}
-
-  if( (settingMask & IS_FADE_MASK) > 0){
-    fadeSpeed[idx]+= FADE_STEP;
-    if(fadeSpeed[idx] > FADE_MAX){
-      fadeSpeed[idx] = -FADE_MAX;
-    }
-  }else{
-    hue[idx] += HUE_STEP;
-  }
 
 }
 void TwoColor::setConfig(uint8_t kConfig){
@@ -52,7 +42,6 @@ void TwoColor::setConfig(uint8_t kConfig){
     hue[i] = 0x0100;
     fadeSpeed[i] = 0;
   }
-  settingMask = 0;
 
   switch(kConfig){
     case STROBE_0_CONFIG:
@@ -69,7 +58,6 @@ void TwoColor::setConfig(uint8_t kConfig){
       break;
 
     case THREE_COLOR_RANDOM_0_CONFIG:
-      settingMask = IS_FADE_MASK;
       hue[Up] = 0x0000;
       hue[Down] = 0x0000;
       hue[Off] = 0x0000;
@@ -79,7 +67,6 @@ void TwoColor::setConfig(uint8_t kConfig){
       break;
 
     case NEUMANN_0_CONFIG:
-      settingMask = IS_FADE_MASK;
       hue[Up] = 0xA500;
       hue[Down] = 0x3000;
       fadeSpeed[Up] = 30;
@@ -90,12 +77,9 @@ void TwoColor::setConfig(uint8_t kConfig){
 }
 
 void TwoColor::run(Sign &sign, EffectData &data){
-  if( !data.shouldStep && (settingMask & IS_FADE_MASK) == 0  ){ return; }
 
-  if( (settingMask & IS_FADE_MASK) > 0){
-    for(uint8_t idx = 0; idx < 3; idx++){
-      hue[idx] += fadeSpeed[idx];
-    }
+  for(uint8_t idx = 0; idx < 3; idx++){
+    hue[idx] += fadeSpeed[idx];
   }
 
   for(uint8_t i=0; i<LED_COUNT; i++){
