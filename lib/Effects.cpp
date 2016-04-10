@@ -22,6 +22,7 @@
 #endif
 #include "effects/NeumannAutomata.cpp"
 #include "effects/Strobe.cpp"
+#include "effects/CenterSquare.cpp"
 
 Effects::Effects(){
   this->reset();
@@ -80,6 +81,7 @@ void Effects::setEffect(uint8_t kEffect, uint8_t layer){
     case SINGLE_FADE: effect[layer] = &singleFade; break;
   #endif
     case STROBE: effect[layer] = &strobe; break;
+    case CENTER_SQUARE: effect[layer] = &centerSquare; break;
     case TWO_COLOR: effect[layer] = &twoColor; break;
     case WAVE0: effect[layer] = &wave0; break;
     case DIFFUSION: effect[layer] = &diffusion; break;
@@ -138,7 +140,13 @@ void Effects::setConfig(uint8_t kConfig){
       this->setEffect(TWO_COLOR, COLOR_LAYER);
       break;
 
+    case SQUARE_0_CONFIG:
+      this->setEffect(CENTER_SQUARE, TEXT_LAYER);
+      this->setEffect(TWO_COLOR, COLOR_LAYER);
+      break;
+
     case STROBE_0_CONFIG:
+    case STROBE_1_CONFIG:
       this->setEffect(STROBE, TEXT_LAYER);
       this->setEffect(TWO_COLOR, COLOR_LAYER);
       break;

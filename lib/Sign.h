@@ -11,6 +11,7 @@ class Sign{
   public:
     void init();
     void off();
+    void setDirection(Direction direction);
     void black();
     void push();
     Pixel* pixel(uint8_t x, uint8_t y);

@@ -6,7 +6,7 @@ Spectrum0::Spectrum0(){
     lastMax[i] = 0;
   }
   isHighOn = false;
-  rolloff = 98;
+  rolloff = 96;
 }
 
 void Spectrum0::run(Sign &sign, EffectData &data){
@@ -46,7 +46,7 @@ void Spectrum0::run(Sign &sign, EffectData &data){
 void Spectrum0::setConfig(uint8_t kConfig){
   switch(kConfig){
     case FIRE0_CONFIG:
-      rolloff = 95;
+      rolloff = 90;
       isHighOn = true;
   }
 }

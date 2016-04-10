@@ -5,7 +5,7 @@
 #define RESET 3
 #define AUDIO_OUT A0
 
-const uint8_t ROLLOFF_DURRATION = 5;
+const uint8_t ROLLOFF_DURRATION = 10;
 
 void Sound::init(){
   //

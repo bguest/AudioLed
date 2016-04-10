@@ -12,9 +12,15 @@ void Sign::init(){
 }
 
 void Sign::off(){
+  this->setDirection(Off);
+}
+
+void Sign::setDirection(Direction direction){
   for(uint8_t i = 0; i<LED_COUNT; i++){
     Pixel *pixel = &pixels[i];
-    pixel->direction[0] = Off;
+    for(uint8_t j = 0; j<2; j++){
+      pixel->direction[j] = direction;
+    }
   }
 }
 

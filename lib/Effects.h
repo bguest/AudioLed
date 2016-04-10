@@ -31,6 +31,7 @@
 #endif
 #include "effects/NeumannAutomata.h"
 #include "effects/Strobe.h"
+#include "effects/CenterSquare.h"
 
 #include "Adafruit_WS2801.h"
 
@@ -45,6 +46,7 @@ const uint8_t UPDATE_DURRATION = 5;
 typedef const enum _EFFECTS {
   RANDOM_ON = 0,
   STROBE,
+  CENTER_SQUARE,
 #if USE_WANDER
   WANDER,
 #endif
@@ -71,7 +73,9 @@ typedef const enum _EFFECTS {
 
 typedef const enum _CONFIGS{
   FIRE0_CONFIG = 0,
+  SQUARE_0_CONFIG,
   STROBE_0_CONFIG,
+  STROBE_1_CONFIG,
   RANDOM_DIFFUSION_0_CONFIG,
   THREE_COLOR_RANDOM_0_CONFIG,
   NEUMANN_0_CONFIG,
@@ -135,6 +139,7 @@ class Effects{
   #endif
     NeumannAutomata neumannAutomata;
     Strobe strobe;
+    CenterSquare centerSquare;
 
     Adafruit_WS2801 strip;
 

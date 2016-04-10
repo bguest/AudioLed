@@ -21,14 +21,14 @@ void TwoColor::randomize(){
 void TwoColor::push(IrInput input){
   switch(input){
     case CENTER: pushDirection = (++pushDirection % 3); break;
-    case UP:   value[pushDirection] += STEP_SIZE; break;
+    case UP: value[pushDirection] += STEP_SIZE; break;
     case LEFT: hue[pushDirection] += HUE_STEP; break;
     case DOWN: saturation[pushDirection] += STEP_SIZE; break;
     case RIGHT:
                if(++fadeSpeed[pushDirection] > FADE_MAX){
                  fadeSpeed[pushDirection] = 0;
                }
-               break; 
+               break;
   }
 
 
@@ -49,6 +49,13 @@ void TwoColor::setConfig(uint8_t kConfig){
       value[Up] = 0xFF;
       value[Off] = 0x0;
       value[Down] = 0x0;
+      break;
+
+    case STROBE_1_CONFIG:
+    case SQUARE_0_CONFIG:
+      hue[Up] = 0xA500;
+      hue[Off] = 0x0000;
+      hue[Down] = 0x3000;
       break;
 
     case FIRE0_CONFIG:
