@@ -113,6 +113,7 @@ void Effects::printEffect(uint8_t kEffect){
   #endif
     case TWO_COLOR: Serial.println("Two Color"); break;
     case STROBE: Serial.println("Strobe"); break;
+    case CENTER_SQUARE: Serial.println("CenterSquare"); break;
     case WAVE0: Serial.println("Wave0"); break;
     case DIFFUSION: Serial.println("Diffusion"); break;
     case SPECTRUM_0: Serial.println("Spectrum0"); break;
@@ -140,6 +141,7 @@ void Effects::setConfig(uint8_t kConfig){
       this->setEffect(TWO_COLOR, COLOR_LAYER);
       break;
 
+    case FADE_SQUARE_0_CONFIG:
     case SQUARE_0_CONFIG:
       this->setEffect(CENTER_SQUARE, TEXT_LAYER);
       this->setEffect(TWO_COLOR, COLOR_LAYER);

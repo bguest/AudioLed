@@ -4,7 +4,9 @@
 #include "Pixel.h"
 
 const uint8_t LED_WIDTH = 7;
+const uint8_t LED_X_CENTER = 3;
 const uint8_t LED_HEIGHT = 5;
+const uint8_t LED_Y_CENTER = 2;
 const uint8_t LED_COUNT = LED_WIDTH*LED_HEIGHT;
 
 class Sign{
