@@ -25,6 +25,11 @@ void SpectrumLine::setConfig(uint8_t kConfig){
   switch(kConfig){
     case BOTTOM_BUBBLES_CONFIG:
       lineHeight = 0;
+      break;
+
+    case CENTER_SPECTRUM_CONFIG:
+      lineHeight = LED_Y_CENTER;
+      break;
   }
 }
 

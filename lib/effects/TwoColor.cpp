@@ -51,14 +51,18 @@ void TwoColor::setConfig(uint8_t kConfig){
       value[Down] = 0x0;
       break;
 
+  #if USE_CENTER_SQUARE
     case FADE_SQUARE_0_CONFIG:
       fadeSpeed[Up] = 50;
       fadeSpeed[Down] = -40;
       fadeSpeed[Off] = 0;
       break;
+  #endif
 
-    case STROBE_1_CONFIG:
+  #if USE_CENTER_SQUARE
     case SQUARE_0_CONFIG:
+  #endif
+    case STROBE_1_CONFIG:
       hue[Up] = 0xA500;
       hue[Off] = 0x0000;
       hue[Down] = 0x3000;

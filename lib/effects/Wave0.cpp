@@ -67,6 +67,12 @@ void Wave0::setConfig(uint8_t kConfig){
       velocityConstant = 0x10000;
       break;
 
+    case CENTER_SPECTRUM_CONFIG:
+      influence = 0b1100;
+      isFixedBoundary = false;
+      velocityConstant = 0xF000;
+      break;
+
     case BOTTOM_BUBBLES_CONFIG:
       influence = 0b0111;
       isFixedBoundary = false;

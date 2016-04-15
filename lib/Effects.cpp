@@ -21,8 +21,10 @@
   #include "effects/ParticleSystem.cpp"
 #endif
 #include "effects/NeumannAutomata.cpp"
+#if USE_CENTER_SQUARE
+  #include "effects/CenterSquare.cpp"
+#endif
 #include "effects/Strobe.cpp"
-#include "effects/CenterSquare.cpp"
 
 Effects::Effects(){
   this->reset();
@@ -81,7 +83,9 @@ void Effects::setEffect(uint8_t kEffect, uint8_t layer){
     case SINGLE_FADE: effect[layer] = &singleFade; break;
   #endif
     case STROBE: effect[layer] = &strobe; break;
+  #if USE_CENTER_SQUARE
     case CENTER_SQUARE: effect[layer] = &centerSquare; break;
+  #endif
     case TWO_COLOR: effect[layer] = &twoColor; break;
     case WAVE0: effect[layer] = &wave0; break;
     case DIFFUSION: effect[layer] = &diffusion; break;
@@ -141,11 +145,13 @@ void Effects::setConfig(uint8_t kConfig){
       this->setEffect(TWO_COLOR, COLOR_LAYER);
       break;
 
+  #if USE_CENTER_SQUARE
     case FADE_SQUARE_0_CONFIG:
     case SQUARE_0_CONFIG:
       this->setEffect(CENTER_SQUARE, TEXT_LAYER);
       this->setEffect(TWO_COLOR, COLOR_LAYER);
       break;
+  #endif
 
     case STROBE_0_CONFIG:
     case STROBE_1_CONFIG:
@@ -181,6 +187,7 @@ void Effects::setConfig(uint8_t kConfig){
       this->setEffect(WAVE0, COLOR_LAYER);
       break;
 
+    case CENTER_SPECTRUM_CONFIG:
     case BOTTOM_BUBBLES_CONFIG:
       this->setEffect(SPECTRUM_LINE, TEXT_LAYER);
       this->setEffect(WAVE0, COLOR_LAYER);

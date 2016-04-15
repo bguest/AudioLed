@@ -2,6 +2,7 @@
 #define CENTER_PULSE_H
 
 #include "Arduino.h"
+#include "Effect.h"
 
 class CenterPulse : public Effect {
   public:

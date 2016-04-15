@@ -138,9 +138,6 @@ void CenterSquare::push(IrInput input){
     case CENTER:
                  lookDistance = 1;
                  perTempo = 1;
-
-
-
   }
   //if((settingsMask & IS_SQUARE_1) > 0){
     //Serial.println("SQUARE 1");
@@ -163,14 +160,14 @@ void CenterSquare::setConfig(uint8_t kConfig){
   switch(kConfig){
 
     case SQUARE_0_CONFIG:
-      perTempo = 1;
+      perTempo = 3;
       settingsMask = IS_SQUARE_1 | IS_USING_SOUND;
       break;
 
     case FADE_SQUARE_0_CONFIG:
-      perTempo = 1;
+      perTempo = 3;
       lookDistance = 1;
-      settingsMask = IS_USING_SOUND;
+      settingsMask = 0;
       break;
 
   }

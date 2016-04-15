@@ -4,6 +4,8 @@
 #include "Arduino.h"
 #include "Effect.h"
 
+const uint8_t MAX_PER_TEMPO = 30;
+
 class Strobe: public Effect {
 
   public:

@@ -1,6 +1,8 @@
 #ifndef EFFECTS_H
 #define EFFECTS_H
 
+#include "Adafruit_WS2801.h"
+
 #define DATA_PIN 11
 #define CLK_PIN 13
 
@@ -8,45 +10,14 @@
 #define USE_SINGLE_FADE       0
 #define USE_WANDER            0
 #define USE_PARTICLE_SYSTEM   0
-
-#include "effects/Effect.h"
-#include "effects/Diffusion.h"
-#include "effects/RandomOn.h"
-#include "effects/TwoColor.h"
-#if USE_SINGLE_FADE
-  #include "effects/SingleFade.h"
-#endif
-#include "effects/Spectrum0.h"
-#if USE_WANDER
-  #include "effects/Wander.h"
-#endif
-#include "effects/Wave0.h"
-#if USE_LINE_SPECTRUM
-  #include "effects/SpectrumLine.h"
-#endif
-#include "effects/CenterPulse.h"
-#include "effects/TimeDomain.h"
-#if USE_PARTICLE_SYSTEM
-  #include "effects/ParticleSystem.h"
-#endif
-#include "effects/NeumannAutomata.h"
-#include "effects/Strobe.h"
-#include "effects/CenterSquare.h"
-
-#include "Adafruit_WS2801.h"
-
-const uint8_t UPDATE_DURRATION = 5;
-
-#define TEXT_LAYER 0
-#define COLOR_LAYER 1
-#define ADJUST_LAYER 2
-#define CONFIG_LAYER 3
-#define LAYER_COUNT 4
+#define USE_CENTER_SQUARE     1
 
 typedef const enum _EFFECTS {
   RANDOM_ON = 0,
   STROBE,
+#if USE_CENTER_SQUARE
   CENTER_SQUARE,
+#endif
 #if USE_WANDER
   WANDER,
 #endif
@@ -73,7 +44,9 @@ typedef const enum _EFFECTS {
 
 typedef const enum _CONFIGS{
   FIRE0_CONFIG = 0,
+#if USE_CENTER_SQUARE
   SQUARE_0_CONFIG,
+#endif
   STROBE_0_CONFIG,
   FADE_SQUARE_0_CONFIG,
   STROBE_1_CONFIG,
@@ -86,9 +59,46 @@ typedef const enum _CONFIGS{
 #endif
   CENTER_WAVE_CONFIG,
   BOTTOM_BUBBLES_CONFIG,
+  CENTER_SPECTRUM_CONFIG,
   DIFFUSION_TIME_CONFIG,
   CONFIG_COUNT
 } CONFIGURATIONS;
+
+
+#define TEXT_LAYER 0
+#define COLOR_LAYER 1
+#define ADJUST_LAYER 2
+#define CONFIG_LAYER 3
+#define LAYER_COUNT 4
+
+#include "effects/Effect.h"
+#include "effects/Strobe.h"
+#include "effects/Diffusion.h"
+#include "effects/RandomOn.h"
+#include "effects/TwoColor.h"
+#if USE_SINGLE_FADE
+  #include "effects/SingleFade.h"
+#endif
+#include "effects/Spectrum0.h"
+#if USE_WANDER
+  #include "effects/Wander.h"
+#endif
+#include "effects/Wave0.h"
+#if USE_LINE_SPECTRUM
+  #include "effects/SpectrumLine.h"
+#endif
+#include "effects/CenterPulse.h"
+#include "effects/TimeDomain.h"
+#if USE_PARTICLE_SYSTEM
+  #include "effects/ParticleSystem.h"
+#endif
+#include "effects/NeumannAutomata.h"
+#if USE_CENTER_SQUARE
+  #include "effects/CenterSquare.h"
+#endif
+
+
+const uint8_t UPDATE_DURRATION = 5;
 
 class Effects{
   public:
@@ -139,8 +149,10 @@ class Effects{
     ParticleSystem particleSystem;
   #endif
     NeumannAutomata neumannAutomata;
-    Strobe strobe;
+  #if USE_CENTER_SQUARE
     CenterSquare centerSquare;
+  #endif
+    Strobe strobe;
 
     Adafruit_WS2801 strip;
 

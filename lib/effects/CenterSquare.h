@@ -8,8 +8,9 @@
 
 #include "Arduino.h"
 #include "Effect.h"
+//#include "Strobe.h"
 
-class CenterSquare: public Effect {
+class CenterSquare : public Effect {
 
   public:
     CenterSquare();

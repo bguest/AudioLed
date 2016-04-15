@@ -1,7 +1,5 @@
 #include "Strobe.h"
 
-const uint8_t MAX_PER_TEMPO = 30;
-
 Strobe::Strobe(){
   perTempo = 2;
 }
@@ -36,8 +34,8 @@ void Strobe::push(IrInput input){
 
 void Strobe::setConfig(uint8_t kConfig){
   switch(kConfig){
-    case STROBE_1_CONFIG:
     case STROBE_0_CONFIG: perTempo = 16; break;
+    case STROBE_1_CONFIG: perTempo = 4; break;
   }
 }
 
