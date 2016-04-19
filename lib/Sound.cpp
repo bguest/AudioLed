@@ -4,8 +4,10 @@
 #define STROBE 2
 #define RESET 3
 #define AUDIO_OUT A0
+#define AUDIO_RAW A1
+#define USE_RAW_VOLUME 1
 
-const uint8_t ROLLOFF_DURRATION = 10;
+const uint8_t ROLLOFF_DURRATION = 5;
 
 void Sound::init(){
   //
@@ -40,7 +42,14 @@ void Sound::run(EffectData &data){
 
   for(uint8_t i = 0; i<FREQ_COUNT; i++) {
     currAmp = ( analogRead(AUDIO_OUT) + analogRead(AUDIO_OUT) )/2;
+#if USE_RAW_VOLUME == 1
+    currVolume = ( analogRead(AUDIO_RAW) + analogRead(AUDIO_RAW) )/2;
+    if(currVolume > volume){
+      volume = currVolume;
+    }
+#else
     currVolume += currAmp;
+#endif
     if (currAmp > freqAmp[i]){
       freqAmp[i] = currAmp;
     }
@@ -48,9 +57,11 @@ void Sound::run(EffectData &data){
     digitalWrite(STROBE, LOW);
   }
 
+#if USE_RAW_VOLUME == 0
   if(currVolume > volume){
     volume = currVolume;
   }
+#endif
 
   // Update if > Sound collect time
   unsigned long currMillis = millis();
@@ -62,7 +73,7 @@ void Sound::run(EffectData &data){
       if(freqAmp[i] > data.freqAmp[i]){
         data.freqAmp[i] = freqAmp[i];
       }else{
-        data.freqAmp[i] = (data.freqAmp[i]*data.rolloff)/100;
+        data.freqAmp[i] = (data.freqAmp[i]*data.rolloff)/200;
       }
 
       if(freqAmp[i] > data.maxFreqAmp[i]){
@@ -74,7 +85,7 @@ void Sound::run(EffectData &data){
     if(volume > data.volume){
       data.volume = volume;
     }else{
-      data.volume = (data.volume*data.rolloff)/100;
+      data.volume = (data.volume*data.rolloff)/200;
     }
 
     if(volume > data.maxVolume){

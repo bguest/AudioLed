@@ -1,6 +1,7 @@
 //#include <Bounce2.h>
 #include <Adafruit_WS2801.h>
 #include <IRremote.h>
+#define USE_RAW_VOLUME 1
 //#define DEBUG
 
 #include <AudioLed.h>
