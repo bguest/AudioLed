@@ -192,7 +192,7 @@ void Effects::prevEffect(uint8_t layer){
   if(cEffect[layer] == 0){
     cEffect[layer] = EFFECT_COUNT - 1;
   }else{
-    cEffect[layer] = (--cEffect[layer]) % EFFECT_COUNT;
+    --cEffect[layer];
   }
   this -> setEffect(cEffect[layer], layer);
 }
@@ -206,7 +206,7 @@ void Effects::prevConfig(){
   if(cConfig == 0){
     cConfig = CONFIG_COUNT - 1;
   }else{
-    cConfig = (--cConfig ) % CONFIG_COUNT;
+    --cConfig;
   }
   this -> setConfig(cConfig);
 }
