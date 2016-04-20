@@ -34,8 +34,9 @@ void Strobe::push(IrInput input){
 
 void Strobe::setConfig(uint8_t kConfig){
   switch(kConfig){
-    case STROBE_0_CONFIG: perTempo = 16; break;
-    case STROBE_1_CONFIG: perTempo = 4; break;
+    case STROBE_0_CONFIG: perTempo = 9; break;
+    case STROBE_2_CONFIG:
+    case STROBE_1_CONFIG: perTempo = 3; break;
   }
 }
 

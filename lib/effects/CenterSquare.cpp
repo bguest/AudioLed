@@ -3,6 +3,8 @@
 CenterSquare::CenterSquare(){
   perTempo = 2;
   lookDistance = 1;
+  isOffCycle = false;
+  lookDistanceCount = 0;
 }
 
 void CenterSquare::run(Sign &sign, EffectData &data){
@@ -11,6 +13,19 @@ void CenterSquare::run(Sign &sign, EffectData &data){
   if( currMillis - lastStep < data.tempo/perTempo ) { return; }
   lastStep = currMillis;
   data.shouldStep = true;
+
+  if(isOffCycle){
+    sign.setDirection(Off);
+    isOffCycle = false;
+  }
+
+  if((settingsMask & IS_CYCLE_LOOK_DIST) > 0){
+    lookDistanceCount++;
+    if(lookDistanceCount > perTempo*2){
+      lookDistance = (lookDistance++) % LOOK_DISTANCE_MAX+1;
+      lookDistanceCount = 0;
+    }
+  }
 
   sign.push();
   this->setCenter(sign, data);
@@ -63,17 +78,17 @@ void CenterSquare::square0(Sign &sign, uint8_t x, uint8_t y){
 
   uint8_t ld = lookDistance;
 
-  if(x < LED_WIDTH/2 && y < LED_HEIGHT/2){ //Lower Left
+  if(x < LED_X_CENTER && y < LED_Y_CENTER){ //Lower Left
          if(this->updatePixel(pixel, sign.pixel(x+ld, y   ) )){}
     else if(this->updatePixel(pixel, sign.pixel(x   , y+ld) )){}
     else if(this->updatePixel(pixel, sign.pixel(x+ld, y+ld) )){}
 
-  }else if( x < LED_WIDTH/2 ){ // Upper Left
+  }else if( x < LED_X_CENTER){ // Upper Left
          if(this->updatePixel(pixel, sign.pixel(x+ld, y   ) )){}
     else if(this->updatePixel(pixel, sign.pixel(x   , y-ld) )){}
     else if(this->updatePixel(pixel, sign.pixel(x+ld, y-ld) )){}
 
-  }else if( y < LED_HEIGHT/2 ){ // Lower Right
+  }else if( y < LED_Y_CENTER ){ // Lower Right
          if(this->updatePixel(pixel, sign.pixel(x-ld, y   ) )){}
     else if(this->updatePixel(pixel, sign.pixel(x   , y+ld) )){}
     else if(this->updatePixel(pixel, sign.pixel(x-ld, y+ld) )){}
@@ -90,28 +105,29 @@ void CenterSquare::square1(Sign &sign, uint8_t x, uint8_t y){
 
   Pixel *pixel = sign.pixel(x,y);
   Direction currDirection = pixel->direction[1];
+  uint8_t ld = lookDistance;
 
   if(x < LED_X_CENTER && y < LED_Y_CENTER){ //Lower Left
-    this->updatePixel(pixel, sign.pixel(x+1, y+1));
-    //this->updatePixel(pixel, sign.pixel(x+1, y));
+    this->updatePixel(pixel, sign.pixel(x+ld, y+ld));
+    //this->updatePixel(pixel, sign.pixel(x+ld, y));
   }else if( x < LED_X_CENTER && y > LED_Y_CENTER){ // Upper Left
-    this->updatePixel(pixel, sign.pixel(x+1, y-1));
-    //this->updatePixel(pixel, sign.pixel(x+1, y));
+    this->updatePixel(pixel, sign.pixel(x+ld, y-ld));
+    //this->updatePixel(pixel, sign.pixel(x+ld, y));
   }else if( x > LED_X_CENTER && y < LED_Y_CENTER){ // Lower Right
-    this->updatePixel(pixel, sign.pixel(x-1, y+1));
-    //this->updatePixel(pixel, sign.pixel(x-1, y));
+    this->updatePixel(pixel, sign.pixel(x-ld, y+ld));
+    //this->updatePixel(pixel, sign.pixel(x-ld, y));
   }else if( x > LED_X_CENTER && y > LED_Y_CENTER){ //Upper Right
-    this->updatePixel(pixel, sign.pixel(x-1, y-1));
-    //this->updatePixel(pixel, sign.pixel(x, y-1));
+    this->updatePixel(pixel, sign.pixel(x-ld, y-ld));
+    //this->updatePixel(pixel, sign.pixel(x, y-ld));
 
   }else if( x == LED_X_CENTER && y > LED_Y_CENTER){
-    this->updatePixel(pixel, sign.pixel(x, y-1));
+    this->updatePixel(pixel, sign.pixel(x, y-ld));
   }else if( x == LED_X_CENTER && y < LED_Y_CENTER){
-    this->updatePixel(pixel, sign.pixel(x, y+1));
+    this->updatePixel(pixel, sign.pixel(x, y+ld));
   }else if( x > LED_X_CENTER && y == LED_Y_CENTER){
-    this->updatePixel(pixel, sign.pixel(x-1, y));
+    this->updatePixel(pixel, sign.pixel(x-ld, y));
   }else if( x < LED_X_CENTER && y == LED_Y_CENTER){
-    this->updatePixel(pixel, sign.pixel(x+1, y));
+    this->updatePixel(pixel, sign.pixel(x+ld, y));
   }
 }
 
@@ -125,7 +141,6 @@ bool CenterSquare::updatePixel(Pixel *target, Pixel *source){
 }
 
 void CenterSquare::push(IrInput input){
-  Effect::push(input);
   switch(input){
     case UP:   if(perTempo < MAX_PER_TEMPO){ perTempo++; } break;
     case DOWN: if(perTempo > 0){ perTempo--; }; break;
@@ -133,11 +148,12 @@ void CenterSquare::push(IrInput input){
                  settingsMask = ++settingsMask % CENTER_SQUARE_SETTING_COUNT;
                  break;
     case LEFT:
-                 lookDistance = ++lookDistance % LOOK_DISTANCE_MAX+1;
+                 lookDistance = (lookDistance++) % LOOK_DISTANCE_MAX+1;
                  break;
     case CENTER:
-                 lookDistance = 1;
-                 perTempo = 1;
+                 isOffCycle = true;
+                 break;
+
   }
   //if((settingsMask & IS_SQUARE_1) > 0){
     //Serial.println("SQUARE 1");
@@ -164,10 +180,10 @@ void CenterSquare::setConfig(uint8_t kConfig){
       settingsMask = IS_SQUARE_1 | IS_USING_SOUND;
       break;
 
-    case FADE_SQUARE_0_CONFIG:
-      perTempo = 3;
+    case SQUARE_1_CONFIG:
+      perTempo = 2;
       lookDistance = 1;
-      settingsMask = 0;
+      settingsMask = IS_CYCLE_LOOK_DIST | IS_USING_SOUND;
       break;
 
   }

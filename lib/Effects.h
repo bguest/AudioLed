@@ -46,10 +46,11 @@ typedef const enum _CONFIGS{
   FIRE0_CONFIG = 0,
 #if USE_CENTER_SQUARE
   SQUARE_0_CONFIG,
+  SQUARE_1_CONFIG,
 #endif
   STROBE_0_CONFIG,
-  FADE_SQUARE_0_CONFIG,
   STROBE_1_CONFIG,
+  STROBE_2_CONFIG,
   RANDOM_DIFFUSION_0_CONFIG,
   THREE_COLOR_RANDOM_0_CONFIG,
   NEUMANN_0_CONFIG,
@@ -120,6 +121,7 @@ class Effects{
     Sign sign;
 
     void setEffect(uint8_t kEffect, uint8_t layer);
+    void setEffects(uint8_t textLayer, uint8_t colorLayer);
     void setConfig(uint8_t kConfig);
   #ifdef DEBUG
     void printEffect(uint8_t kEffect);

@@ -3,7 +3,7 @@
 Tempo::Tempo(){
   tapIdx = 0;
   isDoubleTap = false;
-  tempo = 1000;
+  tempo = 500;
 }
 
 void Tempo::init(){

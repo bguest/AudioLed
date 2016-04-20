@@ -45,6 +45,12 @@ Pixel* Sign::pixel(uint8_t index){
 }
 
 Pixel* Sign::pixel(uint8_t x, uint8_t y){
+  if(x > LED_WIDTH && x < 128){ x = LED_WIDTH-1; }
+  else if( x > LED_WIDTH){ x = 0; }
+
+  if(y > LED_HEIGHT && y < 128){ y = LED_HEIGHT-1; }
+  else if( y > LED_HEIGHT){ y = 0; }
+
   return &pixels[LED_HEIGHT*x+y];
 }
 

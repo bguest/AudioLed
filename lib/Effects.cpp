@@ -108,6 +108,11 @@ void Effects::setEffect(uint8_t kEffect, uint8_t layer){
   #endif
 }
 
+void Effects::setEffects(uint8_t textLayer, uint8_t colorLayer){
+  this->setEffect(textLayer, TEXT_LAYER);
+  this->setEffect(colorLayer, COLOR_LAYER);
+}
+
 #ifdef DEBUG
 void Effects::printEffect(uint8_t kEffect){
   switch(kEffect){
@@ -140,64 +145,39 @@ void Effects::printEffect(uint8_t kEffect){
 void Effects::setConfig(uint8_t kConfig){
   switch(kConfig){
 
-    case FIRE0_CONFIG:
-      this->setEffect(SPECTRUM_0, TEXT_LAYER);
-      this->setEffect(TWO_COLOR, COLOR_LAYER);
-      break;
+    case FIRE0_CONFIG: this->setEffects(SPECTRUM_0, TWO_COLOR); break;
 
   #if USE_CENTER_SQUARE
-    case FADE_SQUARE_0_CONFIG:
     case SQUARE_0_CONFIG:
-      this->setEffect(CENTER_SQUARE, TEXT_LAYER);
-      this->setEffect(TWO_COLOR, COLOR_LAYER);
+    case SQUARE_1_CONFIG:
+      this->setEffects(CENTER_SQUARE, TWO_COLOR);
       break;
   #endif
 
     case STROBE_0_CONFIG:
     case STROBE_1_CONFIG:
-      this->setEffect(STROBE, TEXT_LAYER);
-      this->setEffect(TWO_COLOR, COLOR_LAYER);
+    case STROBE_2_CONFIG:
+      this->setEffects(STROBE, TWO_COLOR);
       break;
 
-    case RANDOM_DIFFUSION_0_CONFIG:
-      this->setEffect(RANDOM_ON, TEXT_LAYER);
-      this->setEffect(DIFFUSION, COLOR_LAYER);
-      break;
+    case RANDOM_DIFFUSION_0_CONFIG: this->setEffect(RANDOM_ON, DIFFUSION); break;
+    case THREE_COLOR_RANDOM_0_CONFIG: this->setEffects(RANDOM_ON, TWO_COLOR); break;
 
-    case THREE_COLOR_RANDOM_0_CONFIG:
-      this->setEffect(RANDOM_ON, TEXT_LAYER);
-      this->setEffect(TWO_COLOR, COLOR_LAYER);
-      break;
-
-    case NEUMANN_0_CONFIG:
-      this->setEffect(NEUMANN_AUTOMATA, TEXT_LAYER);
-      this->setEffect(TWO_COLOR, COLOR_LAYER);
-      break;
+    case NEUMANN_0_CONFIG: this->setEffects(NEUMANN_AUTOMATA, TWO_COLOR); break;
 
   #if USE_PARTICLE_SYSTEM
     case PS_CENTER_FOUNTAIN:
     case PS_FIRE0_CONFIG:
-      this->setEffect(NO_EFFECT, TEXT_LAYER);
-      this->setEffect(PARTICLE_SYSTEM, COLOR_LAYER);
+      this->setEffects(NO_EFFECT, PARTICLE_SYSTEM);
       break;
   #endif
 
-    case CENTER_WAVE_CONFIG:
-      this->setEffect(CENTER_PULSE, TEXT_LAYER);
-      this->setEffect(WAVE0, COLOR_LAYER);
-      break;
+    case CENTER_WAVE_CONFIG: this->setEffects(CENTER_PULSE, WAVE0); break;
 
     case CENTER_SPECTRUM_CONFIG:
-    case BOTTOM_BUBBLES_CONFIG:
-      this->setEffect(SPECTRUM_LINE, TEXT_LAYER);
-      this->setEffect(WAVE0, COLOR_LAYER);
-      break;
+    case BOTTOM_BUBBLES_CONFIG: this->setEffects(SPECTRUM_LINE, WAVE0); break;
 
-    case DIFFUSION_TIME_CONFIG:
-      this->setEffect(TIME_DOMAIN, TEXT_LAYER);
-      this->setEffect(DIFFUSION, COLOR_LAYER);
-      break;
-
+    case DIFFUSION_TIME_CONFIG: this->setEffects(TIME_DOMAIN, DIFFUSION); break;
   }
   effect[TEXT_LAYER]->setConfig(kConfig);
   effect[COLOR_LAYER]->setConfig(kConfig);

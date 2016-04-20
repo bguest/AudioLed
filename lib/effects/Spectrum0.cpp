@@ -6,7 +6,7 @@ Spectrum0::Spectrum0(){
     lastMax[i] = 0;
   }
   isHighOn = false;
-  rolloff = 96;
+  rolloff = 192;
 }
 
 void Spectrum0::run(Sign &sign, EffectData &data){
@@ -25,7 +25,7 @@ void Spectrum0::run(Sign &sign, EffectData &data){
       maxAmp[i] = data.freqAmp[i];
       lastMax[i] = currMillis;
     }else if( currMillis - lastMax[i] > data.tempo / 2){
-      maxAmp[i] = (maxAmp[i]*rolloff)/100;
+      maxAmp[i] = (maxAmp[i]*rolloff)/200;
     }
 
     uint8_t dotSize = data.maxFreqAmp[i]/LED_HEIGHT;
@@ -46,7 +46,7 @@ void Spectrum0::run(Sign &sign, EffectData &data){
 void Spectrum0::setConfig(uint8_t kConfig){
   switch(kConfig){
     case FIRE0_CONFIG:
-      rolloff = 90;
+      rolloff = 180;
       isHighOn = true;
   }
 }
@@ -54,7 +54,7 @@ void Spectrum0::setConfig(uint8_t kConfig){
 void Spectrum0::push(IrInput input){
   Effect::push(input);
   switch(input){
-    case UP: if(rolloff < 100){rolloff++;} break;
+    case UP: if(rolloff < 200){rolloff++;} break;
     case DOWN: if(rolloff > 0){rolloff--;} break;
     case RIGHT: isHighOn = !isHighOn; break;
   }

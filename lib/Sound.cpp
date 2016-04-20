@@ -5,7 +5,6 @@
 #define RESET 3
 #define AUDIO_OUT A0
 #define AUDIO_RAW A1
-#define USE_RAW_VOLUME 1
 
 const uint8_t ROLLOFF_DURRATION = 5;
 
