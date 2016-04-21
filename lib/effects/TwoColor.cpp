@@ -67,6 +67,7 @@ void TwoColor::setConfig(uint8_t kConfig){
   #if USE_CENTER_SQUARE
     case SQUARE_0_CONFIG:
   #endif
+    case BUBBLES_0_CONFIG:
     case STROBE_1_CONFIG:
       hue[Up] = 0xA500;
       hue[Off] = 0x0000;
@@ -87,7 +88,7 @@ void TwoColor::setConfig(uint8_t kConfig){
       fadeSpeed[Down] = 60;
       fadeSpeed[Off] = 10;
       break;
-
+  #if USE_NEUMANN_AUTOMATA
     case NEUMANN_0_CONFIG:
       hue[Up] = 0xA500;
       hue[Down] = 0x3000;
@@ -95,6 +96,7 @@ void TwoColor::setConfig(uint8_t kConfig){
       fadeSpeed[Off] = 60;
       fadeSpeed[Down] = -50;
       break;
+  #endif
   }
 }
 

@@ -14,6 +14,7 @@ class Sign{
     void init();
     void off();
     void setDirection(Direction direction);
+    uint8_t count(Direction direction, uint8_t layer);
     void black();
     void push();
     Pixel* pixel(uint8_t x, uint8_t y);

@@ -5,6 +5,7 @@
 #define RESET 3
 #define AUDIO_OUT A0
 #define AUDIO_RAW A1
+#define USE_RAW_VOLUME 0
 
 const uint8_t ROLLOFF_DURRATION = 5;
 
@@ -41,7 +42,7 @@ void Sound::run(EffectData &data){
 
   for(uint8_t i = 0; i<FREQ_COUNT; i++) {
     currAmp = ( analogRead(AUDIO_OUT) + analogRead(AUDIO_OUT) )/2;
-#if USE_RAW_VOLUME == 1
+#if USE_RAW_VOLUME
     currVolume = ( analogRead(AUDIO_RAW) + analogRead(AUDIO_RAW) )/2;
     if(currVolume > volume){
       volume = currVolume;

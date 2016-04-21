@@ -20,11 +20,14 @@
 #if USE_PARTICLE_SYSTEM
   #include "effects/ParticleSystem.cpp"
 #endif
-#include "effects/NeumannAutomata.cpp"
+#if USE_NEUMANN_AUTOMATA
+  #include "effects/NeumannAutomata.cpp"
+#endif
 #if USE_CENTER_SQUARE
   #include "effects/CenterSquare.cpp"
 #endif
 #include "effects/Strobe.cpp"
+#include "effects/Bubbles.cpp"
 
 Effects::Effects(){
   this->reset();
@@ -101,7 +104,10 @@ void Effects::setEffect(uint8_t kEffect, uint8_t layer){
   #if USE_PARTICLE_SYSTEM
     case PARTICLE_SYSTEM: effect[layer] = &particleSystem; break;
   #endif
+  #if USE_NEUMANN_AUTOMATA
     case NEUMANN_AUTOMATA: effect[layer] = &neumannAutomata; break;
+  #endif
+    case BUBBLES: effect[layer] = &bubbles; break;
   }
   #ifdef DEBUG
     this->printEffect(kEffect);
@@ -137,7 +143,10 @@ void Effects::printEffect(uint8_t kEffect){
   #if USE_PARTICLE_SYSTEM
     case PARTICLE_SYSTEM: Serial.println("ParticleSystem"); break;
   #endif
+  #if USE_NEUMANN_AUTOMATA
     case NEUMANN_AUTOMATA: Serial.println("NeumannAutomata"); break;
+  #endif
+    case BUBBLES: Serial.println("Bubbles"); break;
   }
 }
 #endif
@@ -146,6 +155,7 @@ void Effects::setConfig(uint8_t kConfig){
   switch(kConfig){
 
     case FIRE0_CONFIG: this->setEffects(SPECTRUM_0, TWO_COLOR); break;
+    case BUBBLES_0_CONFIG: this->setEffects(BUBBLES, TWO_COLOR); break;
 
   #if USE_CENTER_SQUARE
     case SQUARE_0_CONFIG:
@@ -160,10 +170,12 @@ void Effects::setConfig(uint8_t kConfig){
       this->setEffects(STROBE, TWO_COLOR);
       break;
 
-    case RANDOM_DIFFUSION_0_CONFIG: this->setEffect(RANDOM_ON, DIFFUSION); break;
+    case RANDOM_DIFFUSION_0_CONFIG: this->setEffects(RANDOM_ON, DIFFUSION); break;
     case THREE_COLOR_RANDOM_0_CONFIG: this->setEffects(RANDOM_ON, TWO_COLOR); break;
 
+  #if USE_NEUMANN_AUTOMATA
     case NEUMANN_0_CONFIG: this->setEffects(NEUMANN_AUTOMATA, TWO_COLOR); break;
+  #endif
 
   #if USE_PARTICLE_SYSTEM
     case PS_CENTER_FOUNTAIN:

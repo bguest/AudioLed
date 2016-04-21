@@ -1,10 +1,12 @@
 #include "CenterSquare.h"
 
 CenterSquare::CenterSquare(){
+  mVolume = 0;
   perTempo = 2;
   lookDistance = 1;
   isOffCycle = false;
   lookDistanceCount = 0;
+  lastStep = 0;
 }
 
 void CenterSquare::run(Sign &sign, EffectData &data){

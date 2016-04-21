@@ -11,6 +11,7 @@
 #define USE_WANDER            0
 #define USE_PARTICLE_SYSTEM   0
 #define USE_CENTER_SQUARE     1
+#define USE_NEUMANN_AUTOMATA  0
 
 typedef const enum _EFFECTS {
   RANDOM_ON = 0,
@@ -18,6 +19,7 @@ typedef const enum _EFFECTS {
 #if USE_CENTER_SQUARE
   CENTER_SQUARE,
 #endif
+  BUBBLES,
 #if USE_WANDER
   WANDER,
 #endif
@@ -27,7 +29,9 @@ typedef const enum _EFFECTS {
   SPECTRUM_LINE,
 #endif
   CENTER_PULSE,
+#if USE_NEUMANN_AUTOMATA
   NEUMANN_AUTOMATA,
+#endif
   NO_EFFECT,
 
 #if USE_SINGLE_FADE
@@ -44,6 +48,7 @@ typedef const enum _EFFECTS {
 
 typedef const enum _CONFIGS{
   FIRE0_CONFIG = 0,
+  BUBBLES_0_CONFIG,
 #if USE_CENTER_SQUARE
   SQUARE_0_CONFIG,
   SQUARE_1_CONFIG,
@@ -53,7 +58,9 @@ typedef const enum _CONFIGS{
   STROBE_2_CONFIG,
   RANDOM_DIFFUSION_0_CONFIG,
   THREE_COLOR_RANDOM_0_CONFIG,
+#if USE_NEUMANN_AUTOMATA
   NEUMANN_0_CONFIG,
+#endif
 #if USE_PARTICLE_SYSTEM
   PS_CENTER_FOUNTAIN,
   PS_FIRE0_CONFIG,
@@ -93,10 +100,13 @@ typedef const enum _CONFIGS{
 #if USE_PARTICLE_SYSTEM
   #include "effects/ParticleSystem.h"
 #endif
-#include "effects/NeumannAutomata.h"
+#if USE_NEUMANN_AUTOMATA
+  #include "effects/NeumannAutomata.h"
+#endif
 #if USE_CENTER_SQUARE
   #include "effects/CenterSquare.h"
 #endif
+#include "effects/Bubbles.h"
 
 
 const uint8_t UPDATE_DURRATION = 5;
@@ -150,11 +160,14 @@ class Effects{
   #if USE_PARTICLE_SYSTEM
     ParticleSystem particleSystem;
   #endif
+  #if USE_NEUMANN_AUTOMA
     NeumannAutomata neumannAutomata;
+  #endif
   #if USE_CENTER_SQUARE
     CenterSquare centerSquare;
   #endif
     Strobe strobe;
+    Bubbles bubbles;
 
     Adafruit_WS2801 strip;
 

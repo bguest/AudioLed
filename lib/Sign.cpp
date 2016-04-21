@@ -24,6 +24,17 @@ void Sign::setDirection(Direction direction){
   }
 }
 
+uint8_t Sign::count(Direction direction, uint8_t layer){
+  uint8_t count = 0;
+  for(uint8_t i = 0; i<LED_COUNT; i++){
+    Pixel *pixel = &pixels[i];
+    if(pixel->direction[layer] == direction){
+      count++;
+    }
+  }
+  return count;
+}
+
 void Sign::black(){
   for(uint8_t i = 0; i<LED_COUNT; i++){
     Pixel *pixel = &pixels[i];
