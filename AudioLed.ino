@@ -1,6 +1,7 @@
 #include <Adafruit_WS2801.h>
 #include <IRremote.h>
 //#define DEBUG
+#undef DEBUG
 
 #include <AudioLed.h>
 AudioLed audioLed;

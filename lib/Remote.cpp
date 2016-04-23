@@ -3,6 +3,7 @@
 Remote::Remote(){
   irrecv = new IRrecv(IR_PIN);
   code = NONE;
+  isRepeat = false;
 }
 
 void Remote::init(){
@@ -11,22 +12,28 @@ void Remote::init(){
 
 void Remote::run(){
   if (irrecv -> decode(&irResults)) {
-    code = this->inputFromIrCode(irResults.value);
+    uint8_t value = (irResults.value & 0x00FF00) >> 8;
+    if(value == REPEAT_IR){
+      isRepeat = true;
+    }else if(value != SECOND_IR){
+      code = this->inputFromIrCode(value);
+      isRepeat = false;
+    }
     irrecv -> resume(); // Receive the next value
   }else{
     code = NONE;
   }
 }
 
-IrInput Remote::inputFromIrCode(uint32_t irCode){
+IrInput Remote::inputFromIrCode(uint8_t irCode){
   switch(irCode){
-    case PLAY_PAUSE_IR_0: case PLAY_PAUSE_IR_1: return PLAY_PAUSE;
-    case MENUE_IR_0:      case MENUE_IR_1:      return MENUE;
-    case UP_IR_0:         case UP_IR_1:         return UP;
-    case DOWN_IR_0:       case DOWN_IR_1:       return DOWN;
-    case LEFT_IR_0:       case LEFT_IR_1:       return LEFT;
-    case RIGHT_IR_0:      case RIGHT_IR_1:      return RIGHT;
-    case CENTER_IR_0:     case CENTER_IR_1:     return CENTER;
+    case PLAY_PAUSE_IR:  return PLAY_PAUSE;
+    case MENUE_IR:       return MENUE;
+    case UP_IR:          return UP;
+    case DOWN_IR:        return DOWN;
+    case LEFT_IR:        return LEFT;
+    case RIGHT_IR:       return RIGHT;
+    case CENTER_IR:      return CENTER;
   }
   return NONE;
 }
