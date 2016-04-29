@@ -1,6 +1,6 @@
 #include <Adafruit_WS2801.h>
-#include <IRremote.h>
-//#define DEBUG
+#include <IRremote.h>        /*DON'T FORGET TO SET SEND_NEC 1*/
+#define USE_RAW_VOLUME 0
 #undef DEBUG
 
 #include <AudioLed.h>
