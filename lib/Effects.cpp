@@ -42,11 +42,8 @@ void Effects::init(){
 }
 
 void Effects::reset(){
-  cConfig = 0;
-  effect[0]  = &randomOn;
-  cEffect[0] = RANDOM_ON;
-  effect[1]  = &diffusion;
-  cEffect[1] = DIFFUSION;
+  cConfig = CENTER_WAVE_CONFIG;
+  this -> setConfig(cConfig);
 }
 
 void Effects::run(EffectData &data){
