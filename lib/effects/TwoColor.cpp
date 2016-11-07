@@ -44,6 +44,12 @@ void TwoColor::setConfig(uint8_t kConfig){
   }
 
   switch(kConfig){
+    case SOLID_FADE_CONFIG:
+      fadeSpeed[Up] = 100;
+      fadeSpeed[Down] = -30;
+      fadeSpeed[Off] = 8;
+      break;
+
     case STROBE_0_CONFIG:
       for(uint8_t i=0; i<3; i++){ saturation[i] = 0; }
       value[Up] = 0xFF;

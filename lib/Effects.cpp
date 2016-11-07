@@ -28,6 +28,7 @@
 #endif
 #include "effects/Strobe.cpp"
 #include "effects/Bubbles.cpp"
+#include "effects/Solid.cpp"
 
 Effects::Effects(){
   this->reset();
@@ -105,6 +106,7 @@ void Effects::setEffect(uint8_t kEffect, uint8_t layer){
     case NEUMANN_AUTOMATA: effect[layer] = &neumannAutomata; break;
   #endif
     case BUBBLES: effect[layer] = &bubbles; break;
+    case SOLID: effect[layer] = &solid; break;
   }
   #ifdef DEBUG
     this->printEffect(kEffect);
@@ -144,6 +146,7 @@ void Effects::printEffect(uint8_t kEffect){
     case NEUMANN_AUTOMATA: Serial.println("NeumannAutomata"); break;
   #endif
     case BUBBLES: Serial.println("Bubbles"); break;
+    case SOLID: Serial.println("Solid"); break;
   }
 }
 #endif
@@ -152,6 +155,7 @@ void Effects::setConfig(uint8_t kConfig){
   switch(kConfig){
 
     case FIRE0_CONFIG: this->setEffects(SPECTRUM_0, TWO_COLOR); break;
+    case SOLID_FADE_CONFIG: this->setEffects(SOLID, TWO_COLOR); break;
     case BUBBLES_0_CONFIG: this->setEffects(BUBBLES, TWO_COLOR); break;
 
   #if USE_CENTER_SQUARE

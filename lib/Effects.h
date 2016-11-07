@@ -32,6 +32,7 @@ typedef const enum _EFFECTS {
 #if USE_NEUMANN_AUTOMATA
   NEUMANN_AUTOMATA,
 #endif
+  SOLID,
   NO_EFFECT,
 
 #if USE_SINGLE_FADE
@@ -48,6 +49,7 @@ typedef const enum _EFFECTS {
 
 typedef const enum _CONFIGS{
   FIRE0_CONFIG = 0,
+  SOLID_FADE_CONFIG,
   BUBBLES_0_CONFIG,
 #if USE_CENTER_SQUARE
   SQUARE_0_CONFIG,
@@ -107,6 +109,7 @@ typedef const enum _CONFIGS{
   #include "effects/CenterSquare.h"
 #endif
 #include "effects/Bubbles.h"
+#include "effects/Solid.h"
 
 
 const uint8_t UPDATE_DURRATION = 5;
@@ -168,6 +171,7 @@ class Effects{
   #endif
     Strobe strobe;
     Bubbles bubbles;
+    Solid solid;
 
     Adafruit_WS2801 strip;
 
