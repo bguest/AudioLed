@@ -12,8 +12,8 @@
 #define MENUE_IR      0x40
 #define UP_IR         0xD0
 #define DOWN_IR       0xB0
-#define LEFT_IR       0xE0
-#define RIGHT_IR      0x10
+#define RIGHT_IR      0xE0
+#define LEFT_IR       0x10
 #define CENTER_IR     0xBA
 #define REPEAT_IR     0xFF
 #define SECOND_IR     0x20

@@ -11,8 +11,10 @@ class CenterPulse : public Effect {
     void push(IrInput input);
 
   private:
-    uint8_t smoothing;
+    //uint8_t smoothing;
     uint16_t maxVal;
+    uint8_t locationX;
+    uint8_t locationY;
 
 };
 

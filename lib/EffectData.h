@@ -1,8 +1,8 @@
 #ifndef EFFECT_DATA_H
 #define EFFECT_DATA_H
 
-#define UINT8_MAX 0xFF
-#define UINT16_MAX 0xFFFF
+//#define UINT8_MAX 0xFF
+//#define UINT16_MAX 0xFFFF
 #define FREQ_COUNT 7
 
 #include "Arduino.h"

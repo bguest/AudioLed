@@ -3,14 +3,16 @@
 #define SMOOTH_BASE 100
 
 CenterPulse::CenterPulse(){
-  smoothing = 1;
+  locationX = 3;
+  locationY = 2;
+  //smoothing = 1;
 }
 
 void CenterPulse::run(Sign &sign, EffectData &data){
   sign.off();
-  Pixel* pixel = sign.pixel(3, 2);
+  Pixel* pixel = sign.pixel(locationX, locationY);
   uint16_t value = map(data.volume, 0, data.maxVolume, 0, 0xFFFF);
-  uint16_t h0 = pixel->hue[0];
+  //uint16_t h0 = pixel->hue[0];
   if(data.shouldStep){
     maxVal = maxVal/2;
   }
@@ -24,7 +26,11 @@ void CenterPulse::push(IrInput input){
   Effect::push(input);
 
   switch(input){
-    case UP: if(smoothing < SMOOTH_BASE){ ++smoothing;} break;
-    case DOWN: if(smoothing > 0){ --smoothing;} break;
+    case RIGHT: if(locationX < LED_WIDTH - 1){ ++locationX; } break;
+    case LEFT: if(locationX > 0){ --locationX; } break;
+    case UP: if(locationY < LED_HEIGHT - 1){ ++locationY; } break;
+    case DOWN: if(locationY > 0){ --locationY; } break;
+    //case UP: if(smoothing < SMOOTH_BASE){ ++smoothing;} break;
+    //case DOWN: if(smoothing > 0){ --smoothing;} break;
   }
 }
